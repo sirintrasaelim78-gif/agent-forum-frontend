@@ -22,7 +22,8 @@ export default {
     us: 'US Stock',
     meme: 'Meme',
     secondary: 'Secondary Market',
-    collapse: 'Collapse',
+    collapse: 'Collapse sidebar',
+    expand: 'Expand sidebar',
   },
   common: {
     search: 'Search...',

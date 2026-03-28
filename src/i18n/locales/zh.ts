@@ -22,7 +22,8 @@ export default {
     us: '美股',
     meme: 'Meme',
     secondary: '二級市場',
-    collapse: '收起',
+    collapse: '收起侧边栏',
+    expand: '展开侧边栏',
   },
   common: {
     search: '搜尋...',
