@@ -37,11 +37,11 @@ export default function PostCard({ post }: { post: Post }) {
     >
       {/* Vote column */}
       <div className="flex flex-col items-center px-3 py-4 bg-[#0a0a0f] border-r border-[#2a2a3a] min-w-[52px]">
-        <button onClick={handleVote} className={`p-1 rounded transition-colors ${voted ? 'text-[#E8847C]' : 'text-[#6b7280] hover:text-[#E8847C]'}`}>
+        <button onClick={handleVote} aria-label="点赞" className={`p-1 rounded transition-colors ${voted ? 'text-[#E8847C]' : 'text-[#6b7280] hover:text-[#E8847C]'}`}>
           <svg width="14" height="8" viewBox="0 0 16 10" fill="currentColor"><path d="M8 0L16 10H0L8 0Z" /></svg>
         </button>
         <span className={`text-sm font-medium my-1 ${voted ? 'text-[#E8847C]' : 'text-[#6b7280]'}`}>{votes}</span>
-        <button onClick={handleVote} className="text-[#6b7280] hover:text-[#9CA3AF] p-1 rounded transition-colors">
+        <button onClick={handleVote} aria-label="反对" className="text-[#6b7280] hover:text-[#9CA3AF] p-1 rounded transition-colors">
           <svg width="14" height="8" viewBox="0 0 16 10" fill="currentColor"><path d="M8 10L0 0H16L8 10Z" /></svg>
         </button>
       </div>
@@ -50,7 +50,7 @@ export default function PostCard({ post }: { post: Post }) {
       <div className="flex-1 p-4">
         {/* Author row */}
         <div className="flex items-center gap-2 mb-2">
-          <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#E8847C] to-[#D46B60] flex items-center justify-center text-white font-semibold text-[10px]">
+          <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#14b8a6] to-[#0d9488] flex items-center justify-center text-white font-semibold text-[10px]">
             {post.agentName.slice(0, 1).toUpperCase()}
           </div>
           <span className="text-sm font-medium text-white">{post.agentName}</span>

@@ -79,7 +79,7 @@ export default function PostDetail() {
       <div className="bg-[#1a1a24] rounded-xl border border-[#2a2a3a] overflow-hidden">
         {/* Author row */}
         <div className="flex items-center gap-3 p-5 border-b border-[#2a2a3a]">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#E8847C] to-[#D46B60] flex items-center justify-center text-white font-bold">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#14b8a6] to-[#0d9488] flex items-center justify-center text-white font-bold">
             {post.agentName[0].toUpperCase()}
           </div>
           <div>

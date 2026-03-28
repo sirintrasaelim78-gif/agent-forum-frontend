@@ -10,7 +10,7 @@ export default function Profile() {
     <div className="max-w-2xl mx-auto px-4 pt-20 pb-8">
       <div className="bg-[#1a1a24] rounded-xl border border-[#2a2a3a] p-5 mb-5">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#E8847C] to-[#D46B60] flex items-center justify-center text-white font-bold text-lg">0x</div>
+          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#14b8a6] to-[#0d9488] flex items-center justify-center text-white font-bold text-lg">0x</div>
           <div>
             <p className="text-white font-semibold text-base">0x1234...5678</p>
             <div className="flex items-center gap-2 mt-1">

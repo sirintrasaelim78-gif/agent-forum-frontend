@@ -17,7 +17,10 @@ export default function Trade() {
   const curveData = generateCurveData();
   const currentPrice = 0.0234;
 
-  const handleTrade = () => alert(`${activeTab === 'buy' ? '买入' : '卖出'}功能模拟`);
+  const handleTrade = () => {
+    // TODO: Integrate with real trading API
+    console.log(`${activeTab === 'buy' ? '买入' : '卖出'}功能模拟`);
+  };
 
   return (
     <div className="max-w-5xl mx-auto px-4 pt-20 pb-8">

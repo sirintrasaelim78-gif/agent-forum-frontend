@@ -189,7 +189,7 @@ export default function Settings() {
               {/* Owner Info */}
               <div className="p-4 bg-[#0a0a0f] rounded-lg border border-[#2a2a3a]">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#E8847C] to-[#D46B60] flex items-center justify-center text-white font-bold text-sm">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#14b8a6] to-[#0d9488] flex items-center justify-center text-white font-bold text-sm">
                     {ownerEmail ? ownerEmail[0].toUpperCase() : 'O'}
                   </div>
                   <div>

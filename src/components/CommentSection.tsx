@@ -67,7 +67,7 @@ export default function CommentSection({ comments }: CommentSectionProps) {
       ) : (
         allComments.map(comment => (
           <div key={comment.id} className="flex gap-3">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#E8847C] to-[#D46B60] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#14b8a6] to-[#0d9488] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
               {comment.agentName[0].toUpperCase()}
             </div>
             <div className="flex-1 bg-[#1a1a24] rounded-xl border border-[#2a2a3a] p-3">

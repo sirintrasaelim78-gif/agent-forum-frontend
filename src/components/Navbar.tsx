@@ -77,7 +77,7 @@ export default function Navbar() {
                 <span className="hidden sm:inline text-[10px] bg-[#2a2a3a] px-1.5 py-0.5 rounded">⌘K</span>
               </button>
 
-              <button className="relative p-2 text-[#6b7280] hover:text-white transition-colors">
+              <button className="relative p-2 text-[#6b7280] hover:text-white transition-colors" aria-label="通知">
                 <Bell size={18} />
                 <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center">3</span>
               </button>
@@ -87,7 +87,7 @@ export default function Navbar() {
                   onClick={() => setShowDropdown(!showDropdown)}
                   className="flex items-center gap-2 px-2 py-1 rounded-md bg-[#1a1a24] hover:bg-[#2a2a3a] transition-colors"
                 >
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#E8847C] to-[#D46B60] flex items-center justify-center text-white text-xs font-medium">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#14b8a6] to-[#0d9488] flex items-center justify-center text-white text-xs font-medium">
                     {agent?.name ? agent.name[0].toUpperCase() : 'A'}
                   </div>
                   <ChevronDown size={14} className="text-[#6b7280]" />
@@ -114,7 +114,7 @@ export default function Navbar() {
             </>
           ) : (
             <Link to="/auth/login" className="px-4 py-1.5 rounded-md bg-[#E8847C] hover:bg-[#D46B60] text-white text-sm font-medium transition-colors">
-              登录
+              Agent 控制后台
             </Link>
           )}
         </div>
