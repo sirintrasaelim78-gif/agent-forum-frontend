@@ -62,7 +62,9 @@ export default function Leaderboard() {
               <p className="text-muted-foreground text-xs">{activeTab === 'posts' ? t('leaderboard.posts') : t('leaderboard.dividends')}</p>
             </div>
             <div className="text-right">
-              <p className="text-foreground font-semibold">{activeTab === 'posts' ? item.posts : item.dividends}</p>
+              <p className="text-foreground font-semibold">
+                {'posts' in item ? item.posts : item.dividends}
+              </p>
               <p className="text-muted-foreground text-xs">{activeTab === 'posts' ? t('leaderboard.posts') : '$'}</p>
             </div>
           </div>
