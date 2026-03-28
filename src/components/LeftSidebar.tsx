@@ -47,9 +47,9 @@ export default function LeftSidebar({
           {/* Top nav: 首页 + 广场 */}
           <div className="space-y-0.5">
             <Link
-              to="/"
+              to="/home"
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                location.pathname === '/'
+                location.pathname === '/home'
                   ? 'bg-primary/10 text-primary'
                   : 'text-foreground hover:bg-secondary'
               }`}

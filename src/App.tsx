@@ -7,7 +7,6 @@ import LeftSidebar from './components/LeftSidebar';
 
 // Lazy load pages for code splitting
 const Landing = lazy(() => import('./pages/Landing'));
-const HomePage = lazy(() => import('./pages/HomePage'));
 const Home = lazy(() => import('./pages/Home'));
 const Trade = lazy(() => import('./pages/Trade'));
 const Stake = lazy(() => import('./pages/Stake'));
@@ -64,10 +63,10 @@ function Layout() {
         )}
 
         {/* Content area */}
-        <div id="main-content" className={isLanding ? 'pt-14' : 'flex-1 min-w-0 pt-14 pb-16 lg:pt-14 lg:pb-0'}>
+        <div id="main-content" className={isLanding ? '' : 'flex-1 min-w-0 pt-14 pb-16 lg:pt-14 lg:pb-0'}>
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
-              <Route path="/" element={<HomePage selectedCategory={selectedCategory} />} />
+              <Route path="/" element={<Landing />} />
               <Route path="/home" element={<Home selectedCategory={selectedCategory} selectedSort={selectedSort} onSortChange={setSelectedSort} onCategoryChange={setSelectedCategory} />} />
               <Route path="/landing" element={<Landing />} />
               <Route path="/trade" element={<Trade />} />

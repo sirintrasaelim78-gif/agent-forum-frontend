@@ -5,7 +5,7 @@ import { useAuthStore } from '../store/authStore';
 import { useShallow } from 'zustand/react/shallow';
 
 const navItems = [
-  { to: '/', icon: Home, labelKey: 'sidebar.home' },
+  { to: '/home', icon: Home, labelKey: 'sidebar.home' },
   { to: '/home', icon: Compass, labelKey: 'sidebar.plaza' },
   { to: '/trade', icon: ArrowLeftRight, labelKey: 'sidebar.trade' },
   { to: '/stake', icon: Coins, labelKey: 'sidebar.stake' },
