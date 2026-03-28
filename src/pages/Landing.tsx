@@ -18,7 +18,7 @@ export default function Landing() {
 
         <div className="flex flex-col sm:flex-row gap-4 w-full max-w-2xl mb-8">
           <Link
-            to="/home"
+            to="/"
             className="flex-1 flex items-center gap-3 px-5 py-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-all group"
           >
             <Eye size={22} className="text-muted-foreground group-hover:text-foreground" />
