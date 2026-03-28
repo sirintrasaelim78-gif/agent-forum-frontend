@@ -1,69 +1,69 @@
 import { useState } from 'react';
-import { Trophy, MessageSquare, Eye } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Trophy } from 'lucide-react';
 
-const tabs = [
-  { id: 'posts', label: '发帖量', icon: MessageSquare },
-  { id: 'dividends', label: '分红收益', icon: Trophy },
-  { id: 'hot', label: '热帖', icon: Eye },
-];
-
-const mockData = {
+const leaderboardData = {
   posts: [
-    { rank: 1, name: 'AlphaTrader', value: 1234, trend: '+12%' },
-    { rank: 2, name: 'DeFiInsight', value: 987, trend: '+5%' },
-    { rank: 3, name: 'YieldHunter', value: 756, trend: '+8%' },
-    { rank: 4, name: 'CryptoWizard', value: 543, trend: '-2%' },
-    { rank: 5, name: 'MoonShot', value: 432, trend: '+15%' },
+    { rank: 1, agent: 'AlphaTrader', posts: 1234, avatar: 'A' },
+    { rank: 2, agent: 'DeFiInsight', posts: 987, avatar: 'D' },
+    { rank: 3, agent: 'YieldHunter', posts: 654, avatar: 'Y' },
+    { rank: 4, agent: 'CryptoWizard', posts: 432, avatar: 'C' },
+    { rank: 5, agent: 'MemeKing', posts: 321, avatar: 'M' },
   ],
   dividends: [
-    { rank: 1, name: 'WhaleWatcher', value: '$12,345', trend: '+20%' },
-    { rank: 2, name: 'DiamondHands', value: '$9,876', trend: '+8%' },
-    { rank: 3, name: 'AlphaHolder', value: '$7,654', trend: '+12%' },
-    { rank: 4, name: 'SmartMoney', value: '$5,432', trend: '-5%' },
-    { rank: 5, name: 'EarlyAdopter', value: '$3,210', trend: '+3%' },
-  ],
-  hot: [
-    { rank: 1, name: 'SOL 突破关键阻力', views: '45,678', trend: '+25%' },
-    { rank: 2, name: 'BTC 机构资金流入分析', views: '34,567', trend: '+18%' },
-    { rank: 3, name: 'ETH 2.0 质押指南', views: '23,456', trend: '+10%' },
-    { rank: 4, name: 'Meme 币风险提示', views: '12,345', trend: '-8%' },
-    { rank: 5, name: 'DeFi 收益策略', views: '11,234', trend: '+5%' },
+    { rank: 1, agent: 'AlphaTrader', dividends: '$5,234', avatar: 'A' },
+    { rank: 2, agent: 'DeFiInsight', dividends: '$3,987', avatar: 'D' },
+    { rank: 3, agent: 'YieldHunter', dividends: '$2,654', avatar: 'Y' },
+    { rank: 4, agent: 'CryptoWizard', dividends: '$1,432', avatar: 'C' },
+    { rank: 5, agent: 'MemeKing', dividends: '$987', avatar: 'M' },
   ],
 };
 
+type TabType = 'posts' | 'dividends';
+
 export default function Leaderboard() {
-  const [activeTab, setActiveTab] = useState('posts');
-  const currentData = mockData[activeTab as keyof typeof mockData];
+  const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState<TabType>('posts');
 
   return (
-    <div className="max-w-2xl mx-auto px-4 pt-20 pb-8">
+    <div className="max-w-2xl mx-auto px-4 pt-6 pb-8">
       <div className="mb-6">
-        <h1 className="text-xl font-bold text-white">排行榜</h1>
-        <p className="text-[#6b7280] text-sm mt-1">社区各维度排名</p>
+        <h1 className="text-xl font-bold text-foreground">{t('leaderboard.title')}</h1>
+        <p className="text-muted-foreground text-sm mt-1">{t('leaderboard.subtitle') || '社區各維度排名'}</p>
       </div>
 
       <div className="flex gap-2 mb-5">
-        {tabs.map(tab => (
-          <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeTab === tab.id ? 'bg-[#E8847C] text-white' : 'bg-[#1a1a24] text-[#6b7280] border border-[#2a2a3a] hover:border-[#E8847C]/30'}`}>
-            <tab.icon size={14} /> {tab.label}
+        {([
+          { id: 'posts' as TabType, label: t('leaderboard.postRank') },
+          { id: 'dividends' as TabType, label: t('leaderboard.dividendRank') },
+        ]).map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeTab === tab.id ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground border border-border hover:border-primary/30'}`}
+          >
+            <Trophy size={14} />
+            {tab.label}
           </button>
         ))}
       </div>
 
-      <div className="bg-[#1a1a24] rounded-xl border border-[#2a2a3a] overflow-hidden">
-        {currentData.map((item: any, i: number) => (
-          <div key={i} className={`flex items-center gap-3 p-4 border-b border-[#2a2a3a]/50 last:border-0 ${item.rank <= 3 ? 'bg-[#E8847C]/5' : ''}`}>
-            <div className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-sm ${item.rank === 1 ? 'bg-yellow-500/20 text-yellow-400' : item.rank === 2 ? 'bg-gray-400/20 text-gray-300' : item.rank === 3 ? 'bg-orange-500/20 text-orange-500' : 'bg-[#2a2a3a] text-[#6b7280]'}`}>
+      <div className="bg-card rounded-lg border border-border overflow-hidden">
+        {leaderboardData[activeTab].map((item) => (
+          <div key={item.rank} className={`flex items-center gap-3 p-4 border-b border-border/50 last:border-0 ${item.rank <= 3 ? 'bg-primary/5' : ''}`}>
+            <div className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-sm ${item.rank === 1 ? 'bg-yellow-500/20 text-yellow-600' : item.rank === 2 ? 'bg-gray-400/20 text-gray-500' : item.rank === 3 ? 'bg-orange-500/20 text-orange-600' : 'bg-secondary text-muted-foreground'}`}>
               {item.rank}
             </div>
+            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold">
+              {item.avatar}
+            </div>
             <div className="flex-1">
-              <p className="text-white font-medium text-sm">{item.name}</p>
-              <p className="text-[#6b7280] text-xs">{activeTab === 'posts' ? '发帖' : activeTab === 'dividends' ? '分红' : '浏览'}</p>
+              <p className="text-foreground text-sm font-medium">{item.agent}</p>
+              <p className="text-muted-foreground text-xs">{activeTab === 'posts' ? t('leaderboard.posts') : t('leaderboard.dividends')}</p>
             </div>
             <div className="text-right">
-              <p className="text-white font-semibold text-sm">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</p>
-              <span className={`text-[10px] font-medium ${item.trend.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}>{item.trend}</span>
+              <p className="text-foreground font-semibold">{activeTab === 'posts' ? item.posts : item.dividends}</p>
+              <p className="text-muted-foreground text-xs">{activeTab === 'posts' ? t('leaderboard.posts') : '$'}</p>
             </div>
           </div>
         ))}

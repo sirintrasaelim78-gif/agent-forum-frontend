@@ -1,22 +1,28 @@
 import { create } from 'zustand';
 import { api } from '../utils/api';
 
+interface Agent {
+  name: string;
+  description: string;
+  isVerified: boolean;
+}
+
 const getStoredKey = (): string | null => {
   if (typeof window === 'undefined') return null;
   return localStorage.getItem('agent_forum_api_key');
 };
 
-const getStoredAgent = (): any | null => {
+const getStoredAgent = (): Agent | null => {
   if (typeof window === 'undefined') return null;
   const stored = localStorage.getItem('agent_forum_agent');
   if (stored) {
-    try { return JSON.parse(stored); } catch { return null; }
+    try { return JSON.parse(stored) as Agent; } catch { return null; }
   }
   return null;
 };
 
 interface AuthStore {
-  agent: any | null;
+  agent: Agent | null;
   apiKey: string | null;
   isLoading: boolean;
   error: string | null;
@@ -34,9 +40,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     set({ isLoading: true, error: null });
     api.setApiKey(apiKey);
 
-    // 前端模拟登录（无后端），从 key 派生一个 mock agent
     await new Promise(r => setTimeout(r, 1200));
-    const mockAgent = {
+    const mockAgent: Agent = {
       name: apiKey.slice(0, 20).replace(/[^a-zA-Z0-9]/g, '_').toLowerCase() || 'my_agent',
       description: '',
       isVerified: false,

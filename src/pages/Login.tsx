@@ -1,97 +1,178 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Lock, AlertCircle, Loader2, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, Globe, ChevronDown, ArrowLeft, Eye, EyeOff, Sparkles } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import Logo from '../components/Logo';
+
+const languages = [
+  { code: 'en', label: 'English' },
+  { code: 'zh', label: '繁體中文' },
+];
 
 export default function Login() {
+  const { t, i18n } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showLangDropdown, setShowLangDropdown] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+  const langDropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    if (!email.trim()) { setError('Please enter your email'); return; }
-    if (!password.trim()) { setError('Please enter your password'); return; }
-    setLoading(true);
-    await new Promise(r => setTimeout(r, 1200));
-    // 前端模拟：邮箱登录直接成功
-    localStorage.setItem('owner_email', email);
-    window.location.href = '/settings';
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (langDropdownRef.current && !langDropdownRef.current.contains(e.target as Node)) {
+        setShowLangDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
+
+  const currentLang = languages.find(l => l.code === i18n.language) || languages[0];
+
+  const handleLogin = () => {
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 2000);
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 bg-[#0a0a0f]">
-      <div className="w-full max-w-md">
-        {/* Logo */}
-        <div className="flex flex-col items-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-1 text-[#6b7280] hover:text-white text-sm mb-4 transition-colors">
-            <ArrowLeft size={14} /> 返回首页
-          </Link>
-          <div className="w-12 h-12 rounded-2xl bg-[#E8847C] flex items-center justify-center mb-4">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-              <path d="M3 3h18v18H3V3zm16 16V5H5v14h14zM7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/>
-            </svg>
-          </div>
-          <h1 className="text-2xl font-bold text-white">Owner Login</h1>
-          <p className="text-[#6b7280] text-sm mt-1">登录管理你的 Agent</p>
-        </div>
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-gradient-to-br from-secondary via-background to-secondary dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      {/* Decorative background elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 -left-20 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+      </div>
 
-        {/* Card */}
-        <div className="bg-[#1a1a24] rounded-xl border border-[#2a2a3a] overflow-hidden">
-          <div className="p-6">
-            {error && (
-              <div className="flex items-center gap-2 p-3 mb-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
-                <AlertCircle size={15} />
-                <span>{error}</span>
+      <div className="w-full max-w-md relative z-10">
+        {/* Back + Language row */}
+        <div className="flex items-center justify-between mb-8">
+          <Link to="/" className="flex items-center gap-1 text-muted-foreground hover:text-foreground text-sm transition-colors">
+            <ArrowLeft size={16} />
+            <span>{t('common.back')}</span>
+          </Link>
+
+          <div className="relative" ref={langDropdownRef}>
+            <button
+              onClick={() => setShowLangDropdown(!showLangDropdown)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/80 backdrop-blur-sm border border-border hover:border-primary/30 transition-colors text-sm"
+            >
+              <Globe size={14} className="text-muted-foreground" />
+              <span className="text-muted-foreground font-medium">{currentLang.label}</span>
+              <ChevronDown size={12} className="text-muted-foreground" />
+            </button>
+            {showLangDropdown && (
+              <div className="absolute right-0 top-full mt-2 w-36 bg-card/95 backdrop-blur-lg rounded-xl border border-border shadow-xl overflow-hidden z-20">
+                {languages.map(lang => (
+                  <button
+                    key={lang.code}
+                    onClick={() => { i18n.changeLanguage(lang.code); setShowLangDropdown(false); }}
+                    className={`w-full flex items-center justify-center px-4 py-2.5 text-sm transition-colors ${
+                      i18n.language === lang.code
+                        ? 'bg-primary/10 text-primary'
+                        : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
+                    }`}
+                  >
+                    {lang.label}
+                  </button>
+                ))}
               </div>
             )}
+          </div>
+        </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="text-sm font-medium text-[#9CA3AF] mb-2 block">Email</label>
-                <div className="relative">
-                  <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6b7280]" />
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your@email.com"
-                    className="w-full pl-10 pr-4 py-2.5 bg-[#0a0a0f] border border-[#2a2a3a] rounded-lg text-white placeholder-[#4b5563] focus:outline-none focus:border-[#E8847C] text-sm"
-                  />
-                </div>
-              </div>
+        {/* Logo */}
+        <div className="flex justify-center mb-8">
+          <Logo size="lg" />
+        </div>
 
-              <div>
-                <label className="text-sm font-medium text-[#9CA3AF] mb-2 block">Password</label>
-                <div className="relative">
-                  <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6b7280]" />
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="w-full pl-10 pr-4 py-2.5 bg-[#0a0a0f] border border-[#2a2a3a] rounded-lg text-white placeholder-[#4b5563] focus:outline-none focus:border-[#E8847C] text-sm"
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-2.5 rounded-lg bg-[#E8847C] hover:bg-[#D46B60] text-white text-sm font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading && <Loader2 size={15} className="animate-spin" />}
-                {loading ? 'Logging in...' : 'Log in'}
-              </button>
-            </form>
+        {/* Login Card */}
+        <div className="bg-card/80 backdrop-blur-lg rounded-2xl border border-border shadow-2xl overflow-hidden">
+          <div className="p-8 pb-0">
+            <div className="text-center mb-6">
+              <h1 className="text-2xl font-bold text-foreground mb-1">{t('auth.loginTitle')}</h1>
+              <p className="text-muted-foreground text-sm">{t('auth.loginSubtitle')}</p>
+            </div>
           </div>
 
-          <div className="px-6 py-4 bg-[#0a0a0f] border-t border-[#2a2a3a]">
-            <p className="text-[#6b7280] text-sm text-center">
-              还没有 Owner 账户？{' '}
-              <Link to="/auth/register" className="text-[#E8847C] hover:text-[#D46B60] font-medium">
-                注册 Agent
+          <div className="p-8 pt-0 space-y-5">
+            {/* Email Field */}
+            <div className="space-y-2">
+              <label htmlFor="email" className="text-sm font-medium text-foreground">{t('auth.email')}</label>
+              <div className={`relative transition-all duration-200 ${focusedField === 'email' ? 'scale-[1.02]' : ''}`}>
+                <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onFocus={() => setFocusedField('email')}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder={t('auth.placeholder.email')}
+                  className="w-full pl-12 pr-4 py-3.5 bg-secondary/50 border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200"
+                />
+              </div>
+            </div>
+
+            {/* Password Field */}
+            <div className="space-y-2">
+              <label htmlFor="password" className="text-sm font-medium text-foreground">{t('auth.password')}</label>
+              <div className={`relative transition-all duration-200 ${focusedField === 'password' ? 'scale-[1.02]' : ''}`}>
+                <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  onFocus={() => setFocusedField('password')}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder={t('auth.placeholder.password')}
+                  className="w-full pl-12 pr-12 py-3.5 bg-secondary/50 border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            {/* Login Button */}
+            <button
+              onClick={handleLogin}
+              disabled={isLoading}
+              className="w-full py-3.5 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground rounded-xl font-medium transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                  <span>登录中...</span>
+                </>
+              ) : (
+                <>
+                  <Sparkles size={18} />
+                  <span>{t('auth.login')}</span>
+                </>
+              )}
+            </button>
+
+            {/* Divider */}
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-border" />
+              </div>
+              <div className="relative flex justify-center">
+                <span className="px-4 bg-card text-sm text-muted-foreground">或</span>
+              </div>
+            </div>
+
+            {/* Register Link */}
+            <p className="text-center text-sm text-muted-foreground">
+              {t('auth.noAccount')}{' '}
+              <Link to="/auth/register" className="text-primary hover:text-primary/80 font-medium transition-colors">
+                {t('auth.register')}
               </Link>
             </p>
           </div>

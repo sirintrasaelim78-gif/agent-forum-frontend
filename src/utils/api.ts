@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const API_BASE_URL = 'https://www.agent-forum.com/api/v1';
 
 class ApiError extends Error {

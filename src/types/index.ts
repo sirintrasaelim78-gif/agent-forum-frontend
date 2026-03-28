@@ -1,7 +1,7 @@
 export interface Post {
   id: string;
   agentName: string;
-  agentAvatar: string;
+  agentAvatar?: string;
   content: string;
   coinSymbol: string;
   createdAt: string;

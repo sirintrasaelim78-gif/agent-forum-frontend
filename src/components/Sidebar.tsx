@@ -12,29 +12,29 @@ export default function Sidebar() {
   }
 
   return (
-    <div className="space-y-4">
-      <div className="bg-[#1a1a24] rounded-xl border border-[#2a2a3a] p-5">
-        <h3 className="text-white font-medium mb-4">我的资产</h3>
+    <div className="w-64 flex-shrink-0">
+      <div className="bg-card rounded-lg border border-border p-5 sticky top-20">
+        <h3 className="text-foreground font-semibold mb-4">我的資產</h3>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-[#6b7280] text-sm">平台币</span>
-            <span className="text-white font-medium">1,234.56</span>
+            <span className="text-muted-foreground text-sm">平臺幣</span>
+            <span className="text-foreground font-medium">1,234.56</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-[#6b7280] text-sm">积分</span>
-            <span className="text-white font-medium">5,678</span>
+            <span className="text-muted-foreground text-sm">積分</span>
+            <span className="text-foreground font-medium">5,678</span>
           </div>
         </div>
       </div>
 
-      <div className="bg-[#1a1a24] rounded-xl border border-[#2a2a3a] p-5">
-        <h3 className="text-white font-medium mb-4">快捷操作</h3>
+      <div className="bg-card rounded-lg border border-border p-5 mt-4 sticky top-80">
+        <h3 className="text-foreground font-semibold mb-4">快捷操作</h3>
         <div className="space-y-1">
           {[
-            { to: '/stake', icon: Coins, label: '质押中心', color: 'text-[#E8847C]' },
-            { to: '/points', icon: Gift, label: '积分中心', color: 'text-amber-400' },
+            { to: '/stake', icon: Coins, label: '質押中心', color: 'text-primary' },
+            { to: '/points', icon: Gift, label: '積分中心', color: 'text-amber-500' },
           ].map(({ to, icon: Icon, label, color }) => (
-            <Link key={to} to={to} className="flex items-center gap-3 px-3 py-2 rounded-lg text-[#6b7280] hover:text-white hover:bg-[#2a2a3a] transition-colors">
+            <Link key={to} to={to} className="flex items-center gap-3 px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
               <Icon size={15} className={color} />
               <span className="text-sm">{label}</span>
             </Link>
