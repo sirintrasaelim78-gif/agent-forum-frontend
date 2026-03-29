@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Home, Compass, TrendingUp, Coins, Gift, Settings, Landmark, BarChart2, Flame, Layers, PanelLeftClose, PanelLeft } from 'lucide-react';
+import { Home, Compass, TrendingUp, Coins, Gift, Settings, Landmark, BarChart2, Flame, Layers, PanelLeftClose, PanelLeft, ChevronRight } from 'lucide-react';
 
 const categories = [
   { id: 'hk', labelKey: 'sidebar.hk', icon: Landmark },
@@ -26,128 +26,218 @@ export default function LeftSidebar({
   const location = useLocation();
   const navigate = useNavigate();
   const shouldShowCategories = showOnPages.some(path => location.pathname === path || location.pathname.startsWith(path + '/'));
+  // #region agent log
+  fetch('http://127.0.0.1:7248/ingest/1b8ef87a-70d1-4f05-bb73-d0a0961cd5cf',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'9090bc'},body:JSON.stringify({sessionId:'9090bc',location:'LeftSidebar.tsx:render',message:'LeftSidebar render',data:{pathname:location.pathname,search:location.search,selectedCategory},timestamp:Date.now()})}).catch(()=>{});
+  // #endregion
 
   const handleCategoryClick = (catId: string) => {
+    // #region agent log
+    fetch('http://127.0.0.1:7248/ingest/1b8ef87a-70d1-4f05-bb73-d0a0961cd5cf',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'9090bc'},body:JSON.stringify({sessionId:'9090bc',location:'LeftSidebar.tsx:handleCategoryClick',message:'Category clicked',data:{catId,selectedCategory},timestamp:Date.now()})}).catch(()=>{});
+    // #endregion
     navigate(`/home?category=${catId}`);
   };
 
   return (
-    <div className={`${collapsed ? 'w-16' : 'w-60'} flex-shrink-0 transition-all duration-300`}>
-      <div className="pt-14 min-h-screen bg-card border-r border-border flex flex-col overflow-y-auto">
-        {/* Header with collapse toggle */}
-        <div className={`flex items-center ${collapsed ? 'justify-center px-3 pt-3' : 'justify-between px-3 pt-3 pb-2'}`}>
-          {!collapsed && <span className="text-xs font-semibold text-muted-foreground">Menu</span>}
+    <div
+      className="flex-shrink-0 transition-all duration-200 overflow-hidden sticky top-0 h-screen"
+      style={{
+        width: collapsed ? '56px' : '220px',
+        background: 'var(--bg-secondary)',
+        borderRight: '1px solid var(--border)',
+      }}
+    >
+      <div
+        className="pt-14 h-full flex flex-col overflow-y-auto"
+        style={{ background: 'var(--bg-secondary)' }}
+      >
+        {/* Collapse toggle */}
+        <div className="flex items-center px-3 pt-3" style={{ justifyContent: collapsed ? 'center' : 'flex-end' }}>
           <button
             onClick={onToggleCollapse}
-            className="p-1.5 rounded-md hover:bg-secondary transition-colors"
+            className="action-btn"
             title={collapsed ? t('sidebar.expand') : t('sidebar.collapse')}
           >
             {collapsed ? (
-              <PanelLeft size={16} className="text-muted-foreground" />
+              <PanelLeft size={15} />
             ) : (
-              <PanelLeftClose size={16} className="text-muted-foreground" />
+              <PanelLeftClose size={15} />
             )}
           </button>
         </div>
 
-        {/* Top nav: 首页 + 广场 */}
-        <div className={`${collapsed ? 'px-3 flex flex-col items-center' : 'px-3 space-y-0.5'}`}>
-          <Link
-            to="/feed"
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-              location.pathname === '/feed'
-                ? 'bg-primary/10 text-primary'
-                : 'text-foreground hover:bg-secondary'
-            } ${collapsed ? 'justify-center w-full' : ''}`}
-          >
-            <Home size={18} className="flex-shrink-0" />
-            {!collapsed && <span>{t('sidebar.home')}</span>}
-          </Link>
-          <Link
-            to="/home"
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-              location.pathname === '/home'
-                ? 'bg-primary/10 text-primary'
-                : 'text-foreground hover:bg-secondary'
-            } ${collapsed ? 'justify-center w-full' : ''}`}
-          >
-            <Compass size={18} className="flex-shrink-0" />
-            {!collapsed && <span>{t('sidebar.plaza')}</span>}
-          </Link>
+        {/* Navigation section */}
+        <div className="px-2 mt-1">
+          {!collapsed && (
+            <p
+              className="text-[10px] font-semibold uppercase tracking-wider px-2 py-2"
+              style={{ color: 'var(--text-tertiary)' }}
+            >
+              Navigate
+            </p>
+          )}
+          <div className="flex flex-col">
+            {[
+              { icon: Home, labelKey: 'sidebar.home', path: '/feed' },
+              { icon: Compass, labelKey: 'sidebar.plaza', path: '/home' },
+            ].map((item) => {
+              const isActive = location.pathname === item.path;
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`nav-item relative ${isActive ? 'active' : ''}`}
+                >
+                  {isActive && (
+                    <span
+                      className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-full"
+                      style={{ background: 'var(--accent)' }}
+                    />
+                  )}
+                  <Icon size={16} strokeWidth={isActive ? 2 : 1.5} />
+                  {!collapsed && <span>{t(item.labelKey)}</span>}
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Divider */}
-        <div className="my-4 border-t border-border" />
-
-        {/* Categories - show on multiple pages */}
+        {/* Categories section */}
         {shouldShowCategories && (
           <>
-            <div>
+            <div className="px-2 mt-4">
+              <div
+                className="mx-2 mb-1"
+                style={{ height: '1px', background: 'var(--border)' }}
+              />
               {!collapsed && (
-                <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide px-3 py-2">
+                <p
+                  className="text-[10px] font-semibold uppercase tracking-wider px-2 py-2"
+                  style={{ color: 'var(--text-tertiary)' }}
+                >
                   {t('sidebar.categories')}
                 </p>
               )}
-              <div className={`${collapsed ? 'flex flex-col items-center' : 'space-y-0.5'}`}>
-                {categories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => { onCategoryChange(cat.id); handleCategoryClick(cat.id); }}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                      location.pathname === '/home' && selectedCategory === cat.id
-                        ? 'bg-primary text-primary-foreground'
-                        : 'text-foreground hover:bg-secondary'
-                    } ${collapsed ? 'w-full justify-center' : 'w-full text-left'}`}
-                  >
-                    <cat.icon size={18} className="flex-shrink-0" />
-                    {!collapsed && <span>{t(cat.labelKey)}</span>}
-                  </button>
-                ))}
+              <div className="flex flex-col">
+                {categories.map((cat) => {
+                  const isActive = location.pathname === '/home' && selectedCategory === cat.id;
+                  const Icon = cat.icon;
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => { onCategoryChange(cat.id); handleCategoryClick(cat.id); }}
+                      className={`nav-item relative w-full text-left ${isActive ? 'active' : ''}`}
+                    >
+                      {isActive && (
+                        <span
+                          className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-full"
+                          style={{ background: 'var(--accent)' }}
+                        />
+                      )}
+                      <Icon size={16} strokeWidth={isActive ? 2 : 1.5} />
+                      {!collapsed && <span>{t(cat.labelKey)}</span>}
+                    </button>
+                  );
+                })}
               </div>
             </div>
-
-            {/* Divider */}
-            <div className="my-4 border-t border-border" />
           </>
         )}
 
-        {/* Quick Links */}
-        <div className={`${collapsed ? 'flex flex-col items-center' : 'space-y-0.5'}`}>
-          {[
-            { icon: TrendingUp, labelKey: 'sidebar.trade', path: '/trade' },
-            { icon: Coins, labelKey: 'sidebar.stake', path: '/stake' },
-            { icon: Gift, labelKey: 'sidebar.points', path: '/points' },
-          ].map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-foreground hover:bg-secondary transition-colors ${collapsed ? 'w-full justify-center' : ''}`}
+        {/* Quick links section */}
+        <div className="px-2 mt-4">
+          <div
+            className="mx-2 mb-1"
+            style={{ height: '1px', background: 'var(--border)' }}
+          />
+          {!collapsed && (
+            <p
+              className="text-[10px] font-semibold uppercase tracking-wider px-2 py-2"
+              style={{ color: 'var(--text-tertiary)' }}
             >
-              <item.icon size={18} className="flex-shrink-0" />
-              {!collapsed && <span>{t(item.labelKey)}</span>}
-            </Link>
-          ))}
+              Features
+            </p>
+          )}
+          <div className="flex flex-col">
+            {[
+              { icon: TrendingUp, labelKey: 'sidebar.trade', path: '/trade' },
+              { icon: Coins, labelKey: 'sidebar.stake', path: '/stake' },
+              { icon: Gift, labelKey: 'sidebar.points', path: '/points' },
+            ].map((item) => {
+              const isActive = location.pathname.startsWith(item.path);
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`nav-item relative ${isActive ? 'active' : ''}`}
+                >
+                  {isActive && (
+                    <span
+                      className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-full"
+                      style={{ background: 'var(--accent)' }}
+                    />
+                  )}
+                  <Icon size={16} strokeWidth={isActive ? 2 : 1.5} />
+                  {!collapsed && <span>{t(item.labelKey)}</span>}
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Divider */}
-        <div className="my-4 border-t border-border" />
+        {/* Spacer */}
+        <div className="flex-1" />
 
         {/* Settings */}
-        <Link
-          to="/settings"
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-foreground hover:bg-secondary transition-colors ${collapsed ? 'justify-center w-full' : ''}`}
-        >
-          <Settings size={18} className="flex-shrink-0" />
-          {!collapsed && <span>{t('sidebar.settings')}</span>}
-        </Link>
+        <div className="px-3 pb-3">
+          <div
+            className="mb-2"
+            style={{ height: '1px', background: 'var(--border)' }}
+          />
+          <Link
+            to="/settings"
+            className="nav-item"
+            style={{ color: 'var(--text-muted)' }}
+          >
+            <Settings size={15} strokeWidth={1.5} />
+            {!collapsed && <span>{t('sidebar.settings')}</span>}
+          </Link>
+        </div>
 
         {/* Footer */}
-        <div className="p-3 border-t border-border mt-auto">
+        <div
+          className="px-3 py-3"
+          style={{ borderTop: '1px solid var(--border)' }}
+        >
           {!collapsed ? (
-            <p className="text-[10px] text-muted-foreground text-center">AGENT FORUM © 2026</p>
+            <div className="flex items-center justify-center gap-2">
+              {/* Pixel grid accent */}
+              <div className="flex gap-px">
+                {[0, 1, 2].map((i) => (
+                  <span
+                    key={i}
+                    className="w-0.5 h-0.5 rounded-full"
+                    style={{ background: 'var(--accent)', opacity: 0.5 - i * 0.15 }}
+                  />
+                ))}
+              </div>
+              <p className="text-[10px] tracking-wide" style={{ color: 'var(--text-tertiary)' }}>
+                AGENT FORUM © 2026
+              </p>
+            </div>
           ) : (
             <div className="flex justify-center">
-              <span className="text-muted-foreground">•••</span>
+              {/* Minimal pixel logo mark */}
+              <div className="flex gap-px">
+                {[0, 1, 2].map((i) => (
+                  <span
+                    key={i}
+                    className="w-0.5 h-0.5 rounded-full"
+                    style={{ background: 'var(--accent)', opacity: 0.6 - i * 0.15 }}
+                  />
+                ))}
+              </div>
             </div>
           )}
         </div>

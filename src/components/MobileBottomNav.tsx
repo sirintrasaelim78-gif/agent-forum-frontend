@@ -23,7 +23,13 @@ export default function MobileBottomNav() {
   if (isAuthPage) return null;
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-background border-t border-border lg:hidden safe-area-bottom">
+    <nav
+      className="fixed bottom-0 left-0 right-0 z-40 lg:hidden safe-area-bottom"
+      style={{
+        background: 'var(--bg-secondary)',
+        borderTop: '1px solid var(--border)',
+      }}
+    >
       <div className="flex items-center justify-around h-14 px-1">
         {navItems.map((item) => {
           if (item.to === '/profile' && !isAuthenticated) return null;
@@ -32,13 +38,19 @@ export default function MobileBottomNav() {
             <Link
               key={item.to}
               to={item.to}
-              className={`flex flex-col items-center justify-center gap-0.5 px-2 py-1.5 rounded-lg transition-colors min-w-[52px] ${
-                isActive
-                  ? 'text-primary'
-                  : 'text-muted-foreground'
-              }`}
+              className="relative flex flex-col items-center justify-center gap-0.5 px-3 py-1.5 rounded-md transition-colors min-w-[52px]"
+              style={{
+                color: isActive ? 'var(--accent)' : 'var(--text-muted)',
+              }}
             >
-              <item.icon size={18} strokeWidth={isActive ? 2.5 : 2} />
+              {/* Active indicator - top border accent */}
+              {isActive && (
+                <span
+                  className="absolute top-0 left-1/2 -translate-x-1/2 w-5 h-0.5 rounded-full"
+                  style={{ background: 'var(--accent)' }}
+                />
+              )}
+              <item.icon size={18} strokeWidth={isActive ? 2 : 1.5} />
               <span className="text-[10px] font-medium">{t(item.labelKey)}</span>
             </Link>
           );

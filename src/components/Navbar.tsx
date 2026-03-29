@@ -85,65 +85,123 @@ export default function Navbar() {
   const currentLang = languages.find(l => l.code === i18n.language) || languages[0];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border h-14">
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 h-[52px]"
+      style={{
+        background: 'color-mix(in oklch, var(--bg-primary) 92%, transparent)',
+        backdropFilter: 'blur(16px)',
+        borderBottom: '1px solid var(--border)',
+      }}
+    >
       <div className="flex items-center justify-between h-full px-4">
-        <Logo size="sm" showSubtitle={false} to="/" textClassName={isLanding ? 'text-white' : ''} />
+        <Logo size="sm" showSubtitle={false} to="/" />
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-0.5">
+          {/* Search */}
+          <button className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors text-sm"
+            style={{ color: 'var(--text-muted)' }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'var(--bg-tertiary)';
+              e.currentTarget.style.color = 'var(--text-secondary)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.color = 'var(--text-muted)';
+            }}
+          >
+            <Search size={14} />
+            <span>{t('common.search')}</span>
+          </button>
+
+          {/* Theme toggle */}
           <div className="relative" ref={themeDropdownRef}>
             <button
               onClick={() => setShowThemeDropdown(!showThemeDropdown)}
-              className="flex items-center justify-center w-9 h-9 rounded-full hover:bg-secondary transition-colors"
+              className="flex items-center justify-center w-9 h-9 rounded-md transition-colors"
               aria-label="Toggle theme"
+              onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-tertiary)'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
             >
-              {isDark ? <Moon size={18} className="text-muted-foreground" /> : <Sun size={18} className="text-muted-foreground" />}
+              {isDark ? (
+                <Moon size={16} style={{ color: 'var(--text-muted)' }} />
+              ) : (
+                <Sun size={16} style={{ color: 'var(--text-muted)' }} />
+              )}
             </button>
 
             {showThemeDropdown && (
-              <div className="absolute right-0 top-full mt-2 w-36 bg-card rounded-xl border border-border shadow-xl overflow-hidden">
+              <div
+                className="absolute right-0 top-full mt-2 w-36 overflow-hidden"
+                style={{
+                  background: 'var(--bg-elevated)',
+                  border: '1px solid var(--border)',
+                  borderRadius: 'var(--radius-lg)',
+                  boxShadow: 'var(--shadow-lg)',
+                }}
+              >
                 <button
                   onClick={() => toggleTheme('light')}
                   className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
-                    !isDark ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-secondary'
+                    !isDark
+                      ? 'bg-[--accent-light] text-[--accent]'
+                      : 'text-[--text-muted] hover:bg-[--bg-tertiary]'
                   }`}
                 >
                   <Sun size={16} />
-                  <span>浅色模式</span>
+                  <span>Light</span>
                 </button>
                 <button
                   onClick={() => toggleTheme('dark')}
                   className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
-                    isDark ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-secondary'
+                    isDark
+                      ? 'bg-[--accent-light] text-[--accent]'
+                      : 'text-[--text-muted] hover:bg-[--bg-tertiary]'
                   }`}
                 >
                   <Moon size={16} />
-                  <span>深色模式</span>
+                  <span>Dark</span>
                 </button>
               </div>
             )}
           </div>
 
+          {/* Language selector */}
           <div className="relative" ref={langDropdownRef}>
             <button
               onClick={() => setShowLangDropdown(!showLangDropdown)}
-              className="flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-secondary transition-colors text-sm"
+              className="flex items-center gap-1.5 px-2 py-1.5 rounded-md transition-colors text-sm"
               aria-label="Change language"
+              onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-tertiary)'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
             >
-              <Globe size={14} className="text-muted-foreground" />
-              <span className="text-muted-foreground font-medium hidden sm:inline">{currentLang.label}</span>
-              <ChevronDown size={12} className="text-muted-foreground" />
+              <Globe size={14} style={{ color: 'var(--text-muted)' }} />
+              <span
+                className="font-medium hidden sm:inline"
+                style={{ color: 'var(--text-muted)' }}
+              >
+                {currentLang.label}
+              </span>
+              <ChevronDown size={12} style={{ color: 'var(--text-muted)' }} />
             </button>
 
             {showLangDropdown && (
-              <div className="absolute right-0 top-full mt-2 w-36 bg-card rounded-xl border border-border shadow-xl overflow-hidden">
+              <div
+                className="absolute right-0 top-full mt-2 w-36 overflow-hidden"
+                style={{
+                  background: 'var(--bg-elevated)',
+                  border: '1px solid var(--border)',
+                  borderRadius: 'var(--radius-lg)',
+                  boxShadow: 'var(--shadow-lg)',
+                }}
+              >
                 {languages.map(lang => (
                   <button
                     key={lang.code}
                     onClick={() => handleLanguageChange(lang.code)}
                     className={`w-full flex items-center justify-center px-4 py-2.5 text-sm transition-colors ${
                       i18n.language === lang.code
-                        ? 'bg-primary/10 text-primary'
-                        : 'text-muted-foreground hover:bg-secondary'
+                        ? 'bg-[--accent-light] text-[--accent]'
+                        : 'text-[--text-muted] hover:bg-[--bg-tertiary]'
                     }`}
                   >
                     {lang.label}
@@ -155,40 +213,85 @@ export default function Navbar() {
 
           {isAuthenticated ? (
             <>
-              <button className="flex items-center gap-2 px-3 py-1.5 rounded-md hover:bg-secondary transition-colors text-sm text-muted-foreground">
-                <Search size={14} />
-                <span className="hidden sm:inline">{t('common.search')}</span>
+              {/* Notifications */}
+              <button
+                className="relative p-2 rounded-md transition-colors min-w-[var(--min-touch)] min-h-[var(--min-touch)] flex items-center justify-center"
+                style={{ color: 'var(--text-muted)' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'var(--bg-tertiary)';
+                  e.currentTarget.style.color = 'var(--text-secondary)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'transparent';
+                  e.currentTarget.style.color = 'var(--text-muted)';
+                }}
+                aria-label={t('common.notifications')}
+              >
+                <Bell size={17} />
+                <span
+                  className="absolute top-1 right-1 w-4 h-4 flex items-center justify-center text-[10px] font-semibold"
+                  style={{ background: 'var(--accent)', color: 'white', borderRadius: '4px' }}
+                >
+                  3
+                </span>
               </button>
 
-              <button className="relative p-2 hover:bg-secondary rounded-md transition-colors text-muted-foreground min-w-[var(--min-touch)] min-h-[var(--min-touch)] flex items-center justify-center" aria-label={t('common.notifications')}>
-                <Bell size={18} />
-                <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-primary text-primary-foreground text-[10px] rounded-full flex items-center justify-center">3</span>
-              </button>
-
+              {/* User dropdown */}
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setShowDropdown(!showDropdown)}
-                  className="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-secondary transition-colors"
+                  className="flex items-center gap-2 px-2 py-1 rounded-md transition-colors"
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-tertiary)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                 >
-                  <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-medium">
+                  <div
+                    className="w-7 h-7 rounded flex items-center justify-center text-xs font-semibold"
+                    style={{
+                      background: 'var(--accent-light)',
+                      color: 'var(--accent)',
+                    }}
+                  >
                     {agent?.name?.[0]?.toUpperCase() ?? 'A'}
                   </div>
-                  <ChevronDown size={14} className="text-muted-foreground" />
+                  <ChevronDown size={14} style={{ color: 'var(--text-muted)' }} />
                 </button>
 
                 {showDropdown && (
-                  <div className="absolute right-0 top-full mt-2 w-48 bg-card rounded-xl border border-border shadow-xl overflow-hidden">
-                    <div className="px-4 py-3 border-b border-border">
-                      <p className="text-sm font-medium text-foreground">{agent?.name}</p>
-                      <p className="text-xs text-muted-foreground">{t('post.agent')}</p>
+                  <div
+                    className="absolute right-0 top-full mt-2 w-48 overflow-hidden"
+                    style={{
+                      background: 'var(--bg-elevated)',
+                      border: '1px solid var(--border)',
+                      borderRadius: 'var(--radius-lg)',
+                      boxShadow: 'var(--shadow-lg)',
+                    }}
+                  >
+                    <div
+                      className="px-4 py-3"
+                      style={{ borderBottom: '1px solid var(--border)' }}
+                    >
+                      <p className="text-sm font-medium text-[--text-primary]">{agent?.name}</p>
+                      <p className="text-xs text-[--text-muted]">{t('post.agent')}</p>
                     </div>
-                    <Link to="/profile" className="flex items-center gap-2 px-4 py-2.5 text-sm text-muted-foreground hover:bg-secondary transition-colors" onClick={() => setShowDropdown(false)}>
+                    <Link
+                      to="/profile"
+                      className="flex items-center gap-2 px-4 py-2.5 text-sm text-[--text-muted] hover:bg-[--bg-tertiary] transition-colors"
+                      onClick={() => setShowDropdown(false)}
+                    >
                       <User size={14} /> {t('common.profile')}
                     </Link>
-                    <Link to="/settings" className="flex items-center gap-2 px-4 py-2.5 text-sm text-muted-foreground hover:bg-secondary transition-colors" onClick={() => setShowDropdown(false)}>
+                    <Link
+                      to="/settings"
+                      className="flex items-center gap-2 px-4 py-2.5 text-sm text-[--text-muted] hover:bg-[--bg-tertiary] transition-colors"
+                      onClick={() => setShowDropdown(false)}
+                    >
                       <Settings size={14} /> {t('common.settings')}
                     </Link>
-                    <button onClick={handleLogout} className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-500 hover:bg-red-500/5 transition-colors">
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-[--bg-tertiary] transition-colors"
+                      style={{ color: 'var(--danger)' }}
+                    >
                       <LogOut size={14} /> {t('common.logout')}
                     </button>
                   </div>
@@ -196,7 +299,17 @@ export default function Navbar() {
               </div>
             </>
           ) : (
-            <Link to="/auth/login" className="px-4 py-1.5 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium transition-colors">
+            <Link
+              to="/auth/login"
+              className="px-4 py-1.5 text-sm font-medium transition-all"
+              style={{
+                background: 'var(--accent)',
+                color: 'white',
+                borderRadius: 'var(--radius-md)',
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.background = 'var(--accent-hover)'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'var(--accent)'}
+            >
               {t('nav.agentControl')}
             </Link>
           )}

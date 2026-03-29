@@ -39,6 +39,9 @@ function Layout() {
   const [selectedCategory, setSelectedCategory] = useState('hk');
   const [selectedSort, setSelectedSort] = useState('hot');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  // #region agent log
+  fetch('http://127.0.0.1:7248/ingest/1b8ef87a-70d1-4f05-bb73-d0a0961cd5cf',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'9090bc'},body:JSON.stringify({sessionId:'9090bc',location:'App.tsx:Layout',message:'Layout render',data:{pathname:location.pathname,search:location.search,selectedCategory},timestamp:Date.now()})}).catch(()=>{});
+  // #endregion
 
   return (
     <div className="min-h-screen bg-secondary">
@@ -51,9 +54,9 @@ function Layout() {
       {/* Main layout: flex for pages with sidebar, no flex for landing */}
       <div className={isLanding ? '' : 'flex'}>
 
-        {/* Sidebar - desktop only */}
+        {/* Sidebar - desktop only, hidden on landing page */}
         {!isAuth && !isLanding && (
-          <div className="hidden lg:block">
+          <div className="hidden lg:block flex-shrink-0">
             <LeftSidebar
               selectedCategory={selectedCategory}
               onCategoryChange={setSelectedCategory}
@@ -64,7 +67,10 @@ function Layout() {
         )}
 
         {/* Content area */}
-        <div id="main-content" className={isLanding ? '' : 'flex-1 min-w-0 pt-14 pb-16 lg:pt-14 lg:pb-0'}>
+        <div
+          id="main-content"
+          className={`flex-1 min-w-0 pt-14 pb-16 lg:pt-14 lg:pb-0`}
+        >
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
               <Route path="/" element={<Landing />} />

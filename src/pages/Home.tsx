@@ -90,69 +90,113 @@ export default function Home({ selectedCategory, selectedSort, onSortChange, onC
     : normalPosts;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 pt-6 pb-8">
-      <PlatformDashboard />
-      <CreatePost />
+    <div className="px-4 pt-4 pb-8">
+      {/* Main content card */}
+      <div
+        style={{
+          background: 'var(--bg-secondary)',
+          border: '1px solid var(--border)',
+          borderRadius: 'var(--radius-lg)',
+        }}
+      >
+        {/* Dashboard and Composer section */}
+        <div className="p-4">
+          <PlatformDashboard />
 
-      {/* Mobile: Category tabs */}
-      <div className="lg:hidden mb-4">
-        <div className="flex gap-2 overflow-x-auto pb-2">
-          {categories.map((cat) => {
-            const Icon = cat.icon;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => onCategoryChange(cat.id)}
-                className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  selectedCategory === cat.id
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-secondary text-muted-foreground hover:bg-secondary/80'
-                }`}
-              >
-                <Icon size={14} />
-                {cat.label}
-              </button>
-            );
-          })}
+          {/* Divider: Dashboard and Composer */}
+          <div className="mt-4 mb-4" style={{ height: '1px', background: 'var(--border)' }} />
+
+          <CreatePost />
         </div>
-      </div>
 
-      {/* Sort Tabs */}
-      <div className="flex mb-4 border-b border-border">
-        <button
-          onClick={() => onSortChange('hot')}
-          className={`flex-1 py-2.5 text-sm font-medium border-b-2 transition-colors ${
-            selectedSort === 'hot'
-              ? 'border-primary text-primary'
-              : 'border-transparent text-muted-foreground hover:text-foreground'
-          }`}
-        >
-          🔥 {t('home.recommend')}
-        </button>
-        <button
-          onClick={() => onSortChange('new')}
-          className={`flex-1 py-2.5 text-sm font-medium border-b-2 transition-colors ${
-            selectedSort === 'new'
-              ? 'border-primary text-primary'
-              : 'border-transparent text-muted-foreground hover:text-foreground'
-          }`}
-        >
-          🕐 {t('home.latest')}
-        </button>
-      </div>
-
-      <div className="space-y-4">
-        {selectedSort === 'hot' && promotedPosts.length > 0 && (
-          <div className="mb-4">
-            <p className="text-xs text-primary font-medium mb-2 px-1">🔥 {t('home.pinnedPost')}</p>
-            {promotedPosts.map(post => <PostCard key={post.id} post={post} />)}
+        {/* Mobile: Category tabs */}
+        <div className="lg:hidden px-4 pb-3">
+          <div className="flex gap-2 overflow-x-auto pb-2">
+            {categories.map((cat) => {
+              const Icon = cat.icon;
+              const isActive = selectedCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => onCategoryChange(cat.id)}
+                  className="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-medium transition-all"
+                  style={{
+                    background: isActive ? 'var(--accent)' : 'var(--bg-tertiary)',
+                    color: isActive ? 'white' : 'var(--text-muted)',
+                  }}
+                >
+                  <Icon size={13} strokeWidth={isActive ? 2 : 1.5} />
+                  {cat.label}
+                </button>
+              );
+            })}
           </div>
-        )}
+        </div>
 
-        <div className="space-y-3">
-          {sortedPosts.map(post => (
-            <PostCard key={post.id} post={post} />
-          ))}
+        {/* Sort Tabs */}
+        <div
+          className="flex px-4"
+          style={{ borderBottom: '1px solid var(--border)' }}
+        >
+          <button
+            onClick={() => onSortChange('hot')}
+            className="flex-1 py-2.5 text-sm font-medium transition-colors relative"
+            style={{
+              color: selectedSort === 'hot' ? 'var(--accent)' : 'var(--text-muted)',
+            }}
+          >
+            {t('home.recommend')}
+            {selectedSort === 'hot' && (
+              <span
+                className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
+                style={{ background: 'var(--accent)' }}
+              />
+            )}
+          </button>
+          <button
+            onClick={() => onSortChange('new')}
+            className="flex-1 py-2.5 text-sm font-medium transition-colors relative"
+            style={{
+              color: selectedSort === 'new' ? 'var(--accent)' : 'var(--text-muted)',
+            }}
+          >
+            {t('home.latest')}
+            {selectedSort === 'new' && (
+              <span
+                className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
+                style={{ background: 'var(--accent)' }}
+              />
+            )}
+          </button>
+        </div>
+
+        {/* Posts list */}
+        <div className="p-4 space-y-3">
+          {selectedSort === 'hot' && promotedPosts.length > 0 && (
+            <div className="mb-2">
+              <p
+                className="text-[10px] font-semibold uppercase tracking-wider px-1 mb-2"
+                style={{ color: 'var(--text-tertiary)' }}
+              >
+                {t('home.pinnedPost')}
+              </p>
+              {promotedPosts.map(post => (
+                <div key={post.id} className="relative pl-3">
+                  <div
+                    className="absolute left-0 top-0 bottom-0 w-0.5 rounded-full"
+                    style={{ background: 'var(--accent)', opacity: 0.5 }}
+                  />
+                  <PostCard post={post} />
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="space-y-3">
+            {sortedPosts.map(post => (
+              <PostCard key={post.id} post={post} />
+            ))}
+          </div>
         </div>
       </div>
     </div>

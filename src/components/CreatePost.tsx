@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuthStore } from '../store/authStore';
 import { useShallow } from 'zustand/react/shallow';
-import { Sparkles, X } from 'lucide-react';
+import { X, AtSign } from 'lucide-react';
 
 interface CreatePostProps {
   onPostCreated?: (content: string, coinSymbol: string) => void;
@@ -29,85 +29,176 @@ export default function CreatePost({ onPostCreated }: CreatePostProps) {
   if (!isAuthenticated) return null;
 
   return (
-    <div className="bg-card rounded-xl border border-border p-4 mb-5 transition-all duration-200">
+    <div
+      className="transition-all duration-200"
+    >
       <div
         onClick={() => setExpanded(true)}
-        className={`flex items-center gap-3 cursor-text ${expanded ? '' : 'hover:bg-secondary rounded-lg p-1 -m-1 transition-colors'}`}
+        className="flex items-start gap-3 cursor-text"
       >
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground text-sm font-bold shadow-md flex-shrink-0">
+        {/* Avatar */}
+        <div
+          className="w-9 h-9 rounded flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5"
+          style={{
+            background: 'var(--accent-light)',
+            color: 'var(--accent)',
+          }}
+        >
           {agent?.name?.[0]?.toUpperCase() ?? 'A'}
         </div>
-        {!expanded && (
-          <span className="text-muted-foreground text-sm">说点什么...</span>
-        )}
-        {expanded && (
-          <input
-            autoFocus
-            value={coinSymbol}
-            onChange={e => setCoinSymbol(e.target.value.toUpperCase())}
-            onClick={e => e.stopPropagation()}
-            placeholder="$Symbol"
-            className="w-20 text-xs px-2 py-1 rounded-lg bg-primary/10 text-primary font-semibold border border-primary/20 focus:outline-none focus:border-primary/40 placeholder:text-primary/40"
-          />
-        )}
-        {expanded && (
-          <textarea
-            autoFocus
-            value={content}
-            onChange={e => setContent(e.target.value)}
-            onClick={e => e.stopPropagation()}
-            placeholder="分享你的投资观点..."
-            className="flex-1 resize-none text-sm text-foreground placeholder:text-muted-foreground bg-transparent focus:outline-none min-h-[80px]"
-            rows={expanded ? 4 : 1}
-          />
-        )}
-      </div>
 
-      {expanded && (
-        <div className="mt-4 pt-4 border-t border-border">
-          <div className="flex items-center justify-between">
-            <div className="relative">
-              <button
-                onClick={e => { e.stopPropagation(); setShowCoinPicker(!showCoinPicker); }}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-secondary text-muted-foreground text-xs hover:text-primary transition-colors"
+        <div className="flex-1 min-w-0">
+          {!expanded ? (
+            <div
+              className="px-3 py-2 rounded-md transition-colors"
+              style={{
+                background: 'var(--bg-primary)',
+                border: '1px solid var(--border)',
+                color: 'var(--text-muted)',
+              }}
+            >
+              说点什么...
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {/* Symbol input + content */}
+              <div className="flex items-center gap-2">
+                <input
+                  autoFocus
+                  value={coinSymbol}
+                  onChange={e => setCoinSymbol(e.target.value.toUpperCase())}
+                  onClick={e => e.stopPropagation()}
+                  placeholder="$Symbol"
+                  className="w-20 text-xs px-2 py-1 font-semibold transition-colors"
+                  style={{
+                    background: 'var(--accent-light)',
+                    color: 'var(--accent)',
+                    border: '1px solid transparent',
+                    borderRadius: 'var(--radius-sm)',
+                  }}
+                  onFocus={(e) => e.currentTarget.style.borderColor = 'var(--accent)'}
+                  onBlur={(e) => e.currentTarget.style.borderColor = 'transparent'}
+                />
+              </div>
+
+              <textarea
+                autoFocus
+                value={content}
+                onChange={e => setContent(e.target.value)}
+                onClick={e => e.stopPropagation()}
+                placeholder="分享你的观点..."
+                className="w-full resize-none text-sm transition-colors min-h-[80px]"
+                style={{
+                  color: 'var(--text-primary)',
+                  background: 'transparent',
+                }}
+                rows={4}
+              />
+
+              {/* Action bar */}
+              <div
+                className="flex items-center justify-between pt-3"
+                style={{ borderTop: '1px solid var(--border)' }}
               >
-                <span className={`w-1.5 h-1.5 rounded-full ${coinSymbol ? 'bg-primary animate-pulse' : 'bg-muted-foreground'}`} />
-                {coinSymbol ? `$${coinSymbol}` : '+ 添加币种'}
-              </button>
-              {showCoinPicker && (
-                <div className="absolute left-0 top-full mt-2 bg-card rounded-xl border border-border shadow-xl p-2 z-20 min-w-[140px]">
-                  {popularCoins.map(coin => (
-                    <button
-                      key={coin}
-                      onClick={e => { e.stopPropagation(); setCoinSymbol(coin); setShowCoinPicker(false); }}
-                      className="block w-full text-left px-3 py-2 text-xs text-muted-foreground hover:bg-secondary hover:text-foreground rounded-lg transition-colors"
+                <div className="relative">
+                  <button
+                    onClick={e => { e.stopPropagation(); setShowCoinPicker(!showCoinPicker); }}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs transition-colors"
+                    style={{
+                      background: coinSymbol ? 'var(--accent-light)' : 'var(--bg-tertiary)',
+                      color: coinSymbol ? 'var(--accent)' : 'var(--text-muted)',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!coinSymbol) e.currentTarget.style.background = 'var(--bg-primary)';
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!coinSymbol) e.currentTarget.style.background = 'var(--bg-tertiary)';
+                    }}
+                  >
+                    <AtSign size={12} />
+                    {coinSymbol ? `$${coinSymbol}` : '添加代币'}
+                  </button>
+                  {showCoinPicker && (
+                    <div
+                      className="absolute left-0 top-full mt-2 p-1.5 z-20 min-w-[140px]"
+                      style={{
+                        background: 'var(--bg-elevated)',
+                        border: '1px solid var(--border)',
+                        borderRadius: 'var(--radius-md)',
+                        boxShadow: 'var(--shadow-lg)',
+                      }}
                     >
-                      ${coin}
-                    </button>
-                  ))}
+                      {popularCoins.map(coin => (
+                        <button
+                          key={coin}
+                          onClick={e => {
+                            e.stopPropagation();
+                            setCoinSymbol(coin);
+                            setShowCoinPicker(false);
+                          }}
+                          className="block w-full text-left px-3 py-2 text-xs rounded transition-colors"
+                          style={{ color: 'var(--text-secondary)' }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = 'var(--bg-tertiary)';
+                            e.currentTarget.style.color = 'var(--text-primary)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = 'transparent';
+                            e.currentTarget.style.color = 'var(--text-secondary)';
+                          }}
+                        >
+                          ${coin}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              )}
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={e => {
+                      e.stopPropagation();
+                      setExpanded(false);
+                      setContent('');
+                      setCoinSymbol('');
+                    }}
+                    className="px-3 py-1.5 rounded-md text-xs transition-colors"
+                    style={{ color: 'var(--text-muted)' }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'var(--bg-tertiary)';
+                      e.currentTarget.style.color = 'var(--text-secondary)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'transparent';
+                      e.currentTarget.style.color = 'var(--text-muted)';
+                    }}
+                  >
+                    取消
+                  </button>
+                  <button
+                    onClick={e => { e.stopPropagation(); handleSubmit(); }}
+                    disabled={!content.trim()}
+                    className="px-4 py-1.5 rounded-md text-xs font-medium transition-all"
+                    style={{
+                      background: content.trim() ? 'var(--accent)' : 'var(--bg-tertiary)',
+                      color: content.trim() ? 'white' : 'var(--text-muted)',
+                      cursor: content.trim() ? 'pointer' : 'not-allowed',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (content.trim()) e.currentTarget.style.background = 'var(--accent-hover)';
+                    }}
+                    onMouseLeave={(e) => {
+                      if (content.trim()) e.currentTarget.style.background = 'var(--accent)';
+                    }}
+                  >
+                    发布
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={e => { e.stopPropagation(); setExpanded(false); setContent(''); setCoinSymbol(''); }}
-                className="px-3 py-1.5 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors flex items-center gap-1"
-              >
-                <X size={14} />
-                取消
-              </button>
-              <button
-                onClick={e => { e.stopPropagation(); handleSubmit(); }}
-                disabled={!content.trim()}
-                className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 disabled:opacity-40 disabled:cursor-not-allowed text-primary-foreground text-xs font-medium transition-all shadow-lg shadow-primary/25 flex items-center gap-1.5"
-              >
-                <Sparkles size={14} />
-                发布
-              </button>
-            </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

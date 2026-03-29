@@ -14,49 +14,116 @@ export default function Points() {
   return (
     <div className="max-w-3xl mx-auto px-4 pt-6 pb-8">
       <div className="mb-6">
-        <h1 className="text-xl font-bold text-foreground">{t('points.title')}</h1>
-        <p className="text-muted-foreground text-sm mt-1">{t('points.desc')}</p>
+        <h1 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{t('points.title')}</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>{t('points.desc')}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3 mb-5">
         {stats.map((s, i) => {
           const Icon = s.icon;
           return (
-            <div key={i} className="bg-card rounded-lg border border-border p-4 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                <Icon size={18} className="text-primary" />
+            <div
+              key={i}
+              className="flex items-center gap-3 p-4"
+              style={{
+                background: 'var(--bg-secondary)',
+                border: '1px solid var(--border)',
+                borderRadius: 'var(--radius-lg)',
+              }}
+            >
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center"
+                style={{ background: 'var(--accent-light)' }}
+              >
+                <Icon size={18} style={{ color: 'var(--accent)' }} />
               </div>
               <div>
-                <p className="text-muted-foreground text-xs">{s.label}</p>
-                <p className="text-foreground font-semibold">{s.value}</p>
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{s.label}</p>
+                <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>{s.value}</p>
               </div>
             </div>
           );
         })}
       </div>
 
-      <div className="bg-card rounded-lg border border-border p-5 mb-5">
-        <h3 className="text-sm font-semibold text-foreground mb-4">{t('points.claimDividend')}</h3>
-        <button className="w-full py-3 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-colors">
+      <div
+        className="p-5 mb-5"
+        style={{
+          background: 'var(--bg-secondary)',
+          border: '1px solid var(--border)',
+          borderRadius: 'var(--radius-lg)',
+        }}
+      >
+        <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>
+          {t('points.claimDividend')}
+        </h3>
+        <button
+          className="w-full py-3 font-medium transition-colors"
+          style={{
+            background: 'var(--accent)',
+            color: 'white',
+            borderRadius: 'var(--radius-md)',
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.background = 'var(--accent-hover)'}
+          onMouseLeave={(e) => e.currentTarget.style.background = 'var(--accent)'}
+        >
           {t('points.claimDividend')} ($12.34)
         </button>
-        <p className="text-muted-foreground text-xs mt-2 text-center">{t('points.claimNote') || '領取後積分將同步銷毀'}</p>
+        <p
+          className="text-xs mt-2 text-center"
+          style={{ color: 'var(--text-muted)' }}
+        >
+          {t('points.claimNote') || '領取後積分將同步銷毀'}
+        </p>
       </div>
 
-      <div className="bg-card rounded-lg border border-border p-5">
-        <h3 className="text-sm font-semibold text-foreground mb-4">{t('points.promote')}</h3>
+      <div
+        className="p-5"
+        style={{
+          background: 'var(--bg-secondary)',
+          border: '1px solid var(--border)',
+          borderRadius: 'var(--radius-lg)',
+        }}
+      >
+        <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>
+          {t('points.promote')}
+        </h3>
         <input
           type="text"
           value={promotePost}
           onChange={(e) => setPromotePost(e.target.value)}
           placeholder={t('points.enterPostId') || '輸入帖子 ID'}
-          className="w-full px-4 py-2.5 rounded-xl bg-secondary border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary text-sm mb-3"
+          className="w-full px-4 py-2.5 text-sm mb-3 transition-colors"
+          style={{
+            background: 'var(--bg-tertiary)',
+            border: '1px solid var(--border)',
+            borderRadius: 'var(--radius-md)',
+            color: 'var(--text-primary)',
+          }}
+          onFocus={(e) => e.currentTarget.style.borderColor = 'var(--accent)'}
+          onBlur={(e) => e.currentTarget.style.borderColor = 'var(--border)'}
         />
-        <div className="flex items-center gap-2 text-xs text-muted-foreground bg-secondary rounded-lg p-3 mb-3">
-          <TrendingUp size={13} className="text-primary" />
+        <div
+          className="flex items-center gap-2 text-xs p-3 rounded-lg mb-3"
+          style={{
+            background: 'var(--bg-tertiary)',
+            color: 'var(--text-muted)',
+          }}
+        >
+          <TrendingUp size={13} style={{ color: 'var(--accent)' }} />
           <span>{t('points.promoteCost') || '推廣費用：100 積分 / 24小時'}</span>
         </div>
-        <button className="w-full py-2.5 rounded-lg border border-primary text-primary font-medium hover:bg-primary/5 transition-colors">
+        <button
+          className="w-full py-2.5 font-medium transition-colors"
+          style={{
+            background: 'transparent',
+            border: '1px solid var(--accent)',
+            color: 'var(--accent)',
+            borderRadius: 'var(--radius-md)',
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.background = 'var(--accent-light)'}
+          onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+        >
           {t('points.confirmPromote') || '確認推廣'}
         </button>
       </div>

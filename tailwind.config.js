@@ -37,9 +37,11 @@ export default {
         success: 'var(--success)',
       },
       borderRadius: {
+        sm: '6px',
+        DEFAULT: '8px',
+        md: '8px',
         lg: '12px',
-        md: '10px',
-        sm: '8px',
+        xl: '16px',
       },
     },
   },
