@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Search, Bell, ChevronDown, LogOut, User, Settings, Globe, Sun, Moon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/authStore';
@@ -19,8 +19,6 @@ export default function Navbar() {
     logout: s.logout,
   })));
   const navigate = useNavigate();
-  const location = useLocation();
-  const isLanding = location.pathname === '/';
   const [showDropdown, setShowDropdown] = useState(false);
   const [showLangDropdown, setShowLangDropdown] = useState(false);
   const [showThemeDropdown, setShowThemeDropdown] = useState(false);

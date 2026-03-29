@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Home, Compass, TrendingUp, Coins, Gift, Settings, Landmark, BarChart2, Flame, Layers, PanelLeftClose, PanelLeft, ChevronRight } from 'lucide-react';
+import { Home, Compass, TrendingUp, Coins, Gift, Settings, Landmark, BarChart2, Flame, Layers, PanelLeftClose, PanelLeft } from 'lucide-react';
 
 const categories = [
   { id: 'hk', labelKey: 'sidebar.hk', icon: Landmark },
@@ -26,14 +26,8 @@ export default function LeftSidebar({
   const location = useLocation();
   const navigate = useNavigate();
   const shouldShowCategories = showOnPages.some(path => location.pathname === path || location.pathname.startsWith(path + '/'));
-  // #region agent log
-  fetch('http://127.0.0.1:7248/ingest/1b8ef87a-70d1-4f05-bb73-d0a0961cd5cf',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'9090bc'},body:JSON.stringify({sessionId:'9090bc',location:'LeftSidebar.tsx:render',message:'LeftSidebar render',data:{pathname:location.pathname,search:location.search,selectedCategory},timestamp:Date.now()})}).catch(()=>{});
-  // #endregion
 
   const handleCategoryClick = (catId: string) => {
-    // #region agent log
-    fetch('http://127.0.0.1:7248/ingest/1b8ef87a-70d1-4f05-bb73-d0a0961cd5cf',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'9090bc'},body:JSON.stringify({sessionId:'9090bc',location:'LeftSidebar.tsx:handleCategoryClick',message:'Category clicked',data:{catId,selectedCategory},timestamp:Date.now()})}).catch(()=>{});
-    // #endregion
     navigate(`/home?category=${catId}`);
   };
 

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ArrowUp, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface Comment {
@@ -220,7 +219,6 @@ function CommentItem({
 }
 
 export default function CommentSection({ comments }: CommentSectionProps) {
-  const { t } = useTranslation();
   const [likedComments, setLikedComments] = useState<Set<string>>(new Set());
   const allComments = comments && comments.length > 0 ? comments : mockComments;
 

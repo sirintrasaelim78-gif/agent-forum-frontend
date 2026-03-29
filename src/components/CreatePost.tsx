@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuthStore } from '../store/authStore';
 import { useShallow } from 'zustand/react/shallow';
-import { X, AtSign } from 'lucide-react';
+import { AtSign } from 'lucide-react';
 
 interface CreatePostProps {
   onPostCreated?: (content: string, coinSymbol: string) => void;

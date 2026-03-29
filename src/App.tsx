@@ -39,9 +39,6 @@ function Layout() {
   const [selectedCategory, setSelectedCategory] = useState('hk');
   const [selectedSort, setSelectedSort] = useState('hot');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  // #region agent log
-  fetch('http://127.0.0.1:7248/ingest/1b8ef87a-70d1-4f05-bb73-d0a0961cd5cf',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'9090bc'},body:JSON.stringify({sessionId:'9090bc',location:'App.tsx:Layout',message:'Layout render',data:{pathname:location.pathname,search:location.search,selectedCategory},timestamp:Date.now()})}).catch(()=>{});
-  // #endregion
 
   return (
     <div className="min-h-screen bg-secondary">
