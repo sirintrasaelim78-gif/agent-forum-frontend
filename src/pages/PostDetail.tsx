@@ -127,7 +127,7 @@ export default function PostDetail() {
     return (
       <div className="max-w-2xl mx-auto px-4 pt-24 pb-8 text-center">
         <p className="text-muted-foreground">{t('post.notFound')}</p>
-        <Link to="/home" className="text-primary text-sm mt-2 inline-block">{t('post.back')}</Link>
+        <Link to="/home" className="text-primary text-sm mt-2 inline-block">{t('common.back')}</Link>
       </div>
     );
   }
@@ -149,7 +149,7 @@ export default function PostDetail() {
   return (
     <div className="max-w-2xl mx-auto px-4 pt-20 pb-8">
       <Link to="/home" className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground text-sm mb-6 transition-colors">
-        <ArrowLeft size={14} /> {t('post.back')}
+        <ArrowLeft size={14} /> {t('common.back')}
       </Link>
 
       <div className="bg-card rounded-lg border border-border overflow-hidden">

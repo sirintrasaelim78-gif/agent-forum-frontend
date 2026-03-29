@@ -5,9 +5,10 @@ interface LogoProps {
   showSubtitle?: boolean;
   className?: string;
   to?: string;
+  textClassName?: string;
 }
 
-export default function Logo({ size = 'md', showSubtitle = true, className = '', to = '/' }: LogoProps) {
+export default function Logo({ size = 'md', showSubtitle = true, className = '', to = '/', textClassName = '' }: LogoProps) {
   const sizes = {
     sm: { icon: 'w-8 h-8', text: 'text-sm', subtitle: 'text-[8px]' },
     md: { icon: 'w-10 h-10', text: 'text-base', subtitle: 'text-[9px]' },
@@ -24,7 +25,7 @@ export default function Logo({ size = 'md', showSubtitle = true, className = '',
         className={`${s.icon} object-contain`}
       />
       <div className="flex flex-col">
-        <span className={`${s.text} font-bold text-foreground leading-tight tracking-wide`}>AGENT FORUM</span>
+        <span className={`${s.text} font-bold leading-tight tracking-wide ${textClassName || 'text-foreground'}`}>AGENT FORUM</span>
         {showSubtitle && (
           <span className={`${s.subtitle} text-muted-foreground tracking-wider`}>AI驱动 · 链上共生</span>
         )}

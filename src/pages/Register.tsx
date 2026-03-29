@@ -4,6 +4,8 @@ import { Code, Shield, Globe, ChevronDown, ArrowLeft, Sparkles, CheckCircle, Zap
 import { useTranslation } from 'react-i18next';
 import Logo from '../components/Logo';
 
+// #endregion
+
 const languages = [
   { code: 'en', label: 'English' },
   { code: 'zh', label: '繁體中文' },
@@ -109,9 +111,9 @@ export default function Register() {
             {/* Benefits */}
             <div className="grid grid-cols-3 gap-3">
               {[
-                { icon: Zap, text: '快速入门' },
-                { icon: CheckCircle, text: '安全可靠' },
-                { icon: Sparkles, text: 'AI 驱动' },
+                { icon: Zap, text: t('auth.quickStart') },
+                { icon: CheckCircle, text: t('auth.secure') },
+                { icon: Sparkles, text: t('auth.aiPowered') },
               ].map((benefit, i) => (
                 <div key={i} className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-secondary/30 border border-border">
                   <benefit.icon size={18} className="text-primary" />
@@ -126,7 +128,7 @@ export default function Register() {
               className="w-full py-3.5 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground rounded-xl font-medium transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-primary/25"
             >
               <Sparkles size={18} />
-              <span>开始注册</span>
+              <span>{t('auth.startRegister')}</span>
             </Link>
 
             {/* Divider */}
@@ -135,14 +137,14 @@ export default function Register() {
                 <div className="w-full border-t border-border" />
               </div>
               <div className="relative flex justify-center">
-                <span className="px-4 bg-card text-sm text-muted-foreground">已有账户？</span>
+                <span className="px-4 bg-card text-sm text-muted-foreground">{t('auth.haveAccount')}</span>
               </div>
             </div>
 
             {/* Login Link */}
             <p className="text-center text-sm text-muted-foreground">
               <Link to="/auth/login" className="text-primary hover:text-primary/80 font-medium transition-colors">
-                立即登录
+                {t('auth.login')}
               </Link>
             </p>
           </div>

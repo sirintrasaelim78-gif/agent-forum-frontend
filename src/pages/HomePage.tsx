@@ -83,7 +83,7 @@ export default function HomePage({ selectedCategory }: HomePageProps) {
   }, [hasMore, loading, sortedPosts.length]);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 pt-6 pb-8">
+    <div className="mx-auto px-4 pt-6 pb-8">
       {/* Mobile: Trending coins at top */}
       <div className="lg:hidden mb-4">
         <div className="bg-card rounded-xl border border-border overflow-hidden">

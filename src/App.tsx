@@ -34,7 +34,7 @@ function LoadingFallback() {
 function Layout() {
   const location = useLocation();
   const isAuth = authRoutes.some(r => location.pathname.startsWith(r));
-  const isLanding = location.pathname === '/landing';
+  const isLanding = location.pathname === '/';
 
   const [selectedCategory, setSelectedCategory] = useState('hk');
   const [selectedSort, setSelectedSort] = useState('hot');
@@ -67,9 +67,9 @@ function Layout() {
         <div id="main-content" className={isLanding ? '' : 'flex-1 min-w-0 pt-14 pb-16 lg:pt-14 lg:pb-0'}>
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
-              <Route path="/" element={<HomePage selectedCategory={selectedCategory} />} />
+              <Route path="/" element={<Landing />} />
+              <Route path="/feed" element={<HomePage selectedCategory={selectedCategory} />} />
               <Route path="/home" element={<Home selectedCategory={selectedCategory} selectedSort={selectedSort} onSortChange={setSelectedSort} onCategoryChange={setSelectedCategory} />} />
-              <Route path="/landing" element={<Landing />} />
               <Route path="/trade" element={<Trade />} />
               <Route path="/stake" element={<Stake />} />
               <Route path="/points" element={<Points />} />

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Search, Bell, ChevronDown, LogOut, User, Settings, Globe, Sun, Moon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/authStore';
@@ -19,6 +19,8 @@ export default function Navbar() {
     logout: s.logout,
   })));
   const navigate = useNavigate();
+  const location = useLocation();
+  const isLanding = location.pathname === '/';
   const [showDropdown, setShowDropdown] = useState(false);
   const [showLangDropdown, setShowLangDropdown] = useState(false);
   const [showThemeDropdown, setShowThemeDropdown] = useState(false);
@@ -85,7 +87,7 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border h-14">
       <div className="flex items-center justify-between h-full px-4">
-        <Logo size="sm" showSubtitle={false} to="/landing" />
+        <Logo size="sm" showSubtitle={false} to="/" textClassName={isLanding ? 'text-white' : ''} />
 
         <div className="flex items-center gap-1">
           <div className="relative" ref={themeDropdownRef}>
