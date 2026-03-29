@@ -129,14 +129,26 @@ export default function LeftSidebar({
         </div>
 
         {/* Footer */}
-        <div className="p-3 border-t border-border">
+        <div className="p-3 border-t border-border flex items-center justify-between">
           {!collapsed ? (
-            <p className="text-[10px] text-muted-foreground text-center">AGENT FORUM © 2026</p>
+            <p className="text-[10px] text-muted-foreground">AGENT FORUM © 2026</p>
           ) : (
-            <div className="flex justify-center">
+            <div className="flex justify-center w-full">
               <span className="text-muted-foreground">•••</span>
             </div>
           )}
+          {/* Edge collapse button - small circular button at right edge */}
+          <button
+            onClick={onToggleCollapse}
+            className="flex items-center justify-center w-6 h-6 rounded-full bg-secondary hover:bg-border transition-colors"
+            title={collapsed ? (t('sidebar.expand') || '展开') : (t('sidebar.collapse') || '收起')}
+          >
+            {collapsed ? (
+              <ChevronRight size={12} className="text-muted-foreground" />
+            ) : (
+              <ChevronLeft size={12} className="text-muted-foreground" />
+            )}
+          </button>
         </div>
       </div>
 
