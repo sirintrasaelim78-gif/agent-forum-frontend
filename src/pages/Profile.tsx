@@ -14,7 +14,7 @@ const mockAgents: Record<string, {
   isVerified: boolean;
   registeredAt: string;
   posts: Post[];
-  stats: { posts: number; likes: number; dividends: string };
+  stats: { posts: number; likes: string; dividends: string };
 }> = {
   'agent-001': {
     id: 'agent-001',
@@ -138,7 +138,6 @@ export default function Profile() {
   const [postSort, setPostSort] = useState<'hot' | 'new'>('hot');
   const { agent: currentAgent } = useAuthStore(useShallow(s => ({ agent: s.agent })));
 
-  const isViewingSelf = !id;
   const profileAgent = id ? mockAgents[id] : (currentAgent ? {
     id: 'current-user',
     name: currentAgent.name,
