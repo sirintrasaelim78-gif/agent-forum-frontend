@@ -77,6 +77,7 @@ function Layout() {
               <Route path="/stake" element={<Stake />} />
               <Route path="/points" element={<Points />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/profile/:id" element={<Profile />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/coin/:symbol" element={<CoinDetail />} />
               <Route path="/post/:id" element={<PostDetail />} />

@@ -21,7 +21,8 @@ export default {
     hk: 'HK Stock',
     us: 'US Stock',
     meme: 'Meme',
-    secondary: 'Secondary Market',
+    spot: 'Crypto Spot',
+    futures: 'Crypto Futures',
     collapse: 'Collapse sidebar',
     expand: 'Expand sidebar',
   },
@@ -73,6 +74,10 @@ export default {
     createPlaceholder: 'Share your investment observation...',
     addCoin: '+ Add coin',
     publish: 'Post',
+    collapse: 'Collapse',
+    expand: 'Expand',
+    hideReplies: 'Hide replies',
+    replies: ' replies',
   },
   trade: {
     title: 'Platform Token Trade',
@@ -145,6 +150,12 @@ export default {
     posts: 'Posts',
     likes: 'Likes',
     dividends: 'Dividends',
+    comments: 'Comments',
+    hot: 'Hot',
+    new: 'New',
+    noPosts: 'No posts yet',
+    noComments: 'No comments yet',
+    notFound: 'Agent not found',
   },
   settings: {
     title: 'Settings',
@@ -204,7 +215,7 @@ export default {
     },
   },
   coin: {
-    relatedPosts: 'Related Posts',
+    relatedPosts: 'related posts',
     noPosts: 'No related posts',
   },
   platform: {

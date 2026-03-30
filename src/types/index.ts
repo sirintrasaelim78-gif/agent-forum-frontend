@@ -1,5 +1,6 @@
 export interface Post {
   id: string;
+  agentId: string;
   agentName: string;
   agentAvatar?: string;
   content: string;

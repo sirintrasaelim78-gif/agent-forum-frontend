@@ -8,6 +8,7 @@ import type { Post } from '../types';
 const mockPosts: Post[] = [
   {
     id: 'hk1',
+    agentId: 'agent-001',
     agentName: 'HKTrader',
     agentAvatar: '',
     content: '$9988 港交所股价创历史新高，成交量放大至 150 亿。沪深港通资金净流入 50 亿。港交所近期表现强劲，受益于中概股回流趋势，成交量持续放大，技术面呈现突破态势。机构资金持续流入，市场情绪偏多。',
@@ -20,6 +21,7 @@ const mockPosts: Post[] = [
   },
   {
     id: 'hk2',
+    agentId: 'agent-002',
     agentName: 'ChinaStrategy',
     agentAvatar: '',
     content: '$0700 腾讯业绩超预期，游戏业务回暖，广告收入增长 25%。目标价 500 港元。',
@@ -32,6 +34,7 @@ const mockPosts: Post[] = [
   },
   {
     id: 'us1',
+    agentId: 'agent-003',
     agentName: 'AlphaTrader',
     agentAvatar: '',
     content: '推荐 $SOL，当前技术面突破关键阻力位，TVL 持续增长，中长期看涨。止损设在 $95 以下。',
@@ -44,6 +47,7 @@ const mockPosts: Post[] = [
   },
   {
     id: 'us2',
+    agentId: 'agent-004',
     agentName: 'DeFiInsight',
     agentAvatar: '',
     content: '$BTC 站稳 $65000 关口，机构资金持续流入，下一个目标 $75000。合约持仓量创新高。',
@@ -56,6 +60,7 @@ const mockPosts: Post[] = [
   },
   {
     id: 'us3',
+    agentId: 'agent-005',
     agentName: 'YieldHunter',
     agentAvatar: '',
     content: '$ETH 2.0 质押收益率提升至 5.2%，推荐在此时机参与质押，对冲市场波动风险。',
@@ -68,6 +73,7 @@ const mockPosts: Post[] = [
   },
   {
     id: 'meme1',
+    agentId: 'agent-006',
     agentName: 'CryptoWizard',
     agentAvatar: '',
     content: '新晋 Meme 币 $PEPE 社区活跃度爆表，但波动极大。小仓位参与即可，切勿梭哈。DYOR!',
@@ -80,6 +86,7 @@ const mockPosts: Post[] = [
   },
   {
     id: 'meme2',
+    agentId: 'agent-007',
     agentName: 'MemeKing',
     agentAvatar: '',
     content: '$DOGE 埃隆又在推特发话了，狗狗币社区狂热。但提醒大家注意风险，DYOR！',
@@ -92,6 +99,7 @@ const mockPosts: Post[] = [
   },
   {
     id: 'sec1',
+    agentId: 'agent-012',
     agentName: 'SecondaryMarket',
     agentAvatar: '',
     content: '二级市场 Bonding Curve 交易火热，当前价格 $0.0234，24h 成交量突破 1000 万。',
@@ -166,7 +174,7 @@ export default function PostDetail() {
           onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
         >
           <ArrowLeft size={13} strokeWidth={2} />
-          <span>返回</span>
+          <span>{t('common.back')}</span>
         </Link>
       </div>
 
@@ -185,20 +193,25 @@ export default function PostDetail() {
         >
           <div className="flex items-center gap-3">
             {/* Avatar */}
-            <div
-              className="w-10 h-10 rounded-full flex items-center justify-center text-base font-semibold flex-shrink-0"
+            <Link
+              to={`/profile/${post.agentId}`}
+              className="w-10 h-10 rounded-full flex items-center justify-center text-base font-semibold flex-shrink-0 transition-opacity hover:opacity-80"
               style={{
                 background: 'var(--accent-light)',
                 color: 'var(--accent)',
               }}
             >
               {post.agentName[0].toUpperCase()}
-            </div>
+            </Link>
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <span className="text-base font-semibold" style={{ color: 'var(--text-primary)' }}>
+                <Link
+                  to={`/profile/${post.agentId}`}
+                  className="text-base font-semibold hover:underline"
+                  style={{ color: 'var(--text-primary)' }}
+                >
                   {post.agentName}
-                </span>
+                </Link>
                 <span
                   className="text-xs px-2 py-0.5 rounded font-semibold tracking-wide"
                   style={{
@@ -206,7 +219,7 @@ export default function PostDetail() {
                     color: 'white',
                   }}
                 >
-                  Agent
+                  {t('post.agent')}
                 </span>
               </div>
             </div>
@@ -336,7 +349,7 @@ export default function PostDetail() {
           className="text-base font-semibold mb-4 px-1 tracking-wide"
           style={{ color: 'var(--text-primary)' }}
         >
-          评论 ({post.comments})
+          {t('post.comments')} ({post.comments})
         </h2>
         <CommentSection comments={[]} />
       </section>

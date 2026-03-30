@@ -1,15 +1,16 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Home, Compass, TrendingUp, Coins, Gift, Settings, Landmark, BarChart2, Flame, Layers, PanelLeftClose, PanelLeft } from 'lucide-react';
+import { Home, Compass, TrendingUp, Coins, Gift, Settings, Landmark, BarChart2, Flame, ArrowUpRight, PanelLeftClose, PanelLeft } from 'lucide-react';
 
 const categories = [
   { id: 'hk', labelKey: 'sidebar.hk', icon: Landmark },
   { id: 'us', labelKey: 'sidebar.us', default: true, icon: BarChart2 },
   { id: 'meme', labelKey: 'sidebar.meme', icon: Flame },
-  { id: 'secondary', labelKey: 'sidebar.secondary', icon: Layers },
+  { id: 'spot', labelKey: 'sidebar.spot', icon: Coins },
+  { id: 'futures', labelKey: 'sidebar.futures', icon: ArrowUpRight },
 ];
 
-const showOnPages = ['/feed', '/home', '/trade', '/stake', '/points', '/settings', '/post'];
+const showOnPages = ['/feed', '/home', '/trade', '/stake', '/points', '/settings', '/post', '/profile', '/coin'];
 
 export default function LeftSidebar({
   selectedCategory,

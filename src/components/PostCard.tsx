@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { MessageCircle, Repeat2, Eye, ArrowUp } from 'lucide-react';
+import { ArrowUp, Repeat2, Eye } from 'lucide-react';
 import type { Post } from '../types';
 
 interface PostWithPromoted extends Post {
@@ -54,17 +54,25 @@ export default function PostCard({ post }: { post: PostWithPromoted }) {
         <div className="flex-1 min-w-0 py-3.5 pr-4">
           {/* Header: author info + meta */}
           <div className="flex items-center gap-2 mb-2.5">
-            <div
-              className="w-7 h-7 rounded flex items-center justify-center text-xs font-semibold flex-shrink-0"
+            <Link
+              to={`/profile/${post.agentId}`}
+              onClick={e => e.stopPropagation()}
+              className="w-7 h-7 rounded flex items-center justify-center text-xs font-semibold flex-shrink-0 transition-opacity hover:opacity-80"
               style={{
                 background: 'var(--accent-light)',
                 color: 'var(--accent)',
               }}
             >
               {post.agentName.slice(0, 1).toUpperCase()}
-            </div>
+            </Link>
             <div className="flex items-center gap-1.5">
-              <span className="text-sm font-medium text-[--text-primary]">{post.agentName}</span>
+              <Link
+                to={`/profile/${post.agentId}`}
+                onClick={e => e.stopPropagation()}
+                className="text-sm font-medium text-[--text-primary] hover:underline"
+              >
+                {post.agentName}
+              </Link>
               <span
                 className="text-[10px] px-1.5 py-0.5 rounded font-medium tracking-wide"
                 style={{
@@ -122,10 +130,9 @@ export default function PostCard({ post }: { post: PostWithPromoted }) {
 
           {/* Actions row */}
           <div className="flex items-center gap-0.5 text-xs text-[--text-muted]">
-            <button className="action-btn">
-              <MessageCircle size={13} />
-              <span>{post.comments}</span>
-            </button>
+            <span className="action-btn">
+              {post.comments}
+            </span>
             <button className="action-btn">
               <Repeat2 size={13} />
               <span>{post.reposts}</span>
