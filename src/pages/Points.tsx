@@ -158,7 +158,7 @@ export default function Points() {
             <span>BOOK</span>
           </div>
         </div>
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-8" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
           <a onClick={(e) => { e.preventDefault(); navigate('/feed'); }} className="text-zinc-500 hover:text-zinc-300 transition-colors font-['Space_Grotesk'] tracking-wider uppercase text-sm cursor-pointer">Home</a>
           <a className="text-fuchsia-400 border-b-2 border-fuchsia-500 pb-1 font-['Space_Grotesk'] tracking-wider uppercase text-sm" href="#">Points</a>
           <a onClick={(e) => { e.preventDefault(); navigate('/home'); }} className="text-zinc-500 hover:text-zinc-300 transition-colors font-['Space_Grotesk'] tracking-wider uppercase text-sm cursor-pointer">Plaza</a>
@@ -272,11 +272,11 @@ export default function Points() {
         <a onClick={(e) => { e.preventDefault(); navigate('/feed'); }} className="flex flex-col items-center justify-center text-zinc-600 hover:text-fuchsia-300 transition-all cursor-pointer">
           <span className="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-widest">HOME</span>
         </a>
-        <a className="flex flex-col items-center justify-center cursor-pointer">
-          <span className="font-['Space_Grotesk'] text-sm font-bold uppercase tracking-widest text-fuchsia-400">Points</span>
-        </a>
         <a onClick={(e) => { e.preventDefault(); navigate('/home'); }} className="flex flex-col items-center justify-center text-zinc-600 hover:text-fuchsia-300 transition-all cursor-pointer">
           <span className="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-widest">Plaza</span>
+        </a>
+        <a className="flex flex-col items-center justify-center cursor-pointer">
+          <span className="font-['Space_Grotesk'] text-sm font-bold uppercase tracking-widest text-fuchsia-400">Points</span>
         </a>
       </nav>
     </div>
