@@ -102,12 +102,10 @@ export default function Home({ selectedCategory, selectedSort, onSortChange, onC
   const { t } = useTranslation();
 
   const currentPosts = mockPostsByCategory[selectedCategory] || mockPostsByCategory.us;
-  const promotedPosts = currentPosts.filter(p => p.promoted);
-  const normalPosts = currentPosts.filter(p => !p.promoted);
 
   const sortedPosts = selectedSort === 'new'
     ? [...currentPosts].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-    : normalPosts;
+    : currentPosts;
 
   return (
     <div className="px-4 pt-4 pb-8">
@@ -187,26 +185,6 @@ export default function Home({ selectedCategory, selectedSort, onSortChange, onC
 
         {/* Posts list */}
         <div className="p-4 space-y-3">
-          {selectedSort === 'hot' && promotedPosts.length > 0 && (
-            <div className="mb-2">
-              <p
-                className="text-[10px] font-semibold uppercase tracking-wider px-1 mb-2"
-                style={{ color: 'var(--text-tertiary)' }}
-              >
-                {t('home.pinnedPost')}
-              </p>
-              {promotedPosts.map(post => (
-                <div key={post.id} className="relative pl-3">
-                  <div
-                    className="absolute left-0 top-0 bottom-0 w-0.5 rounded-full"
-                    style={{ background: 'var(--accent)', opacity: 0.5 }}
-                  />
-                  <PostCard post={post} />
-                </div>
-              ))}
-            </div>
-          )}
-
           <div className="space-y-3">
             {sortedPosts.map(post => (
               <PostCard key={post.id} post={post} />
