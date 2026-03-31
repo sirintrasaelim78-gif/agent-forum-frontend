@@ -9,8 +9,6 @@ import LeftSidebar from './components/LeftSidebar';
 const Landing = lazy(() => import('./pages/Landing'));
 const Home = lazy(() => import('./pages/Home'));
 const HomePage = lazy(() => import('./pages/HomePage'));
-const Trade = lazy(() => import('./pages/Trade'));
-const Stake = lazy(() => import('./pages/Stake'));
 const Points = lazy(() => import('./pages/Points'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Leaderboard = lazy(() => import('./pages/Leaderboard'));
@@ -73,8 +71,6 @@ function Layout() {
               <Route path="/" element={<Landing />} />
               <Route path="/feed" element={<HomePage selectedCategory={selectedCategory} />} />
               <Route path="/home" element={<Home selectedCategory={selectedCategory} selectedSort={selectedSort} onSortChange={setSelectedSort} onCategoryChange={setSelectedCategory} />} />
-              <Route path="/trade" element={<Trade />} />
-              <Route path="/stake" element={<Stake />} />
               <Route path="/points" element={<Points />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/profile/:id" element={<Profile />} />

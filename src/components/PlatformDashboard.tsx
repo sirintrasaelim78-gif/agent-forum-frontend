@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useApp } from '../context/AppContext';
-import { Coins, Activity, Wallet, Gift, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { Gift, Coins } from 'lucide-react';
 
 export default function PlatformDashboard() {
   const { t } = useTranslation();
@@ -9,20 +9,12 @@ export default function PlatformDashboard() {
   const formatNumber = (num: number) => {
     if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
     if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
-    return num.toFixed(4);
+    return num.toString();
   };
 
   const stats = [
-    {
-      icon: Coins,
-      label: t('platform.currentPrice'),
-      value: `$${platformData.price.toFixed(4)}`,
-      sub: `${platformData.change24h > 0 ? '+' : ''}${platformData.change24h.toFixed(2)}%`,
-      up: platformData.change24h >= 0,
-    },
-    { icon: Activity, label: t('platform.volume24h'), value: `$${formatNumber(platformData.volume24h)}` },
-    { icon: Wallet, label: t('platform.totalStaked'), value: `$${formatNumber(platformData.totalStaked)}` },
-    { icon: Gift, label: t('platform.dividendPool'), value: `$${formatNumber(platformData.dividendPool)}` },
+    { icon: Gift, label: t('platform.dividendPool'), value: `${formatNumber(platformData.dividendPool)}` },
+    { icon: Coins, label: t('sidebar.points'), value: `${formatNumber(platformData.totalPoints)}` },
   ];
 
   return (
@@ -53,7 +45,7 @@ export default function PlatformDashboard() {
           {t('common.refresh')}
         </button>
       </div>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 gap-3">
         {stats.map((s, i) => {
           const Icon = s.icon;
           return (
@@ -78,23 +70,12 @@ export default function PlatformDashboard() {
                 >
                   {s.label}
                 </p>
-                <div className="flex items-center gap-1.5">
-                  <span
-                    className="text-sm font-semibold whitespace-nowrap tabular-nums"
-                    style={{ color: 'var(--text-primary)' }}
-                  >
-                    {s.value}
-                  </span>
-                  {s.sub && (
-                    <span
-                      className="flex items-center gap-0.5 text-[10px] whitespace-nowrap tabular-nums"
-                      style={{ color: s.up ? 'var(--success)' : 'var(--danger)' }}
-                    >
-                      {s.up ? <ArrowUpRight size={10} /> : <ArrowDownRight size={10} />}
-                      {s.sub}
-                    </span>
-                  )}
-                </div>
+                <span
+                  className="text-sm font-semibold whitespace-nowrap tabular-nums"
+                  style={{ color: 'var(--text-primary)' }}
+                >
+                  {s.value}
+                </span>
               </div>
             </div>
           );

@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Compass, ArrowLeftRight, Coins, Gift, User } from 'lucide-react';
+import { Home, Compass, Gift, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/authStore';
 import { useShallow } from 'zustand/react/shallow';
@@ -7,8 +7,6 @@ import { useShallow } from 'zustand/react/shallow';
 const navItems = [
   { to: '/feed', icon: Home, labelKey: 'sidebar.home' },
   { to: '/home', icon: Compass, labelKey: 'sidebar.plaza' },
-  { to: '/trade', icon: ArrowLeftRight, labelKey: 'sidebar.trade' },
-  { to: '/stake', icon: Coins, labelKey: 'sidebar.stake' },
   { to: '/points', icon: Gift, labelKey: 'sidebar.points' },
   { to: '/profile', icon: User, labelKey: 'common.profile' },
 ];

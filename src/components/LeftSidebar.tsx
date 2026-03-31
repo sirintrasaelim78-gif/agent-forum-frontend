@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Home, Compass, TrendingUp, Coins, Gift, Settings, Landmark, BarChart2, Flame, ArrowUpRight, PanelLeftClose, PanelLeft } from 'lucide-react';
+import { Home, Compass, Coins, Gift, Settings, Landmark, BarChart2, Flame, ArrowUpRight, PanelLeftClose, PanelLeft } from 'lucide-react';
 
 const categories = [
   { id: 'hk', labelKey: 'sidebar.hk', icon: Landmark },
@@ -10,7 +10,7 @@ const categories = [
   { id: 'futures', labelKey: 'sidebar.futures', icon: ArrowUpRight },
 ];
 
-const showOnPages = ['/feed', '/home', '/trade', '/stake', '/points', '/settings', '/post', '/profile', '/coin'];
+const showOnPages = ['/feed', '/home', '/points', '/settings', '/post', '/profile', '/coin'];
 
 export default function LeftSidebar({
   selectedCategory,
@@ -155,8 +155,6 @@ export default function LeftSidebar({
           )}
           <div className="flex flex-col">
             {[
-              { icon: TrendingUp, labelKey: 'sidebar.trade', path: '/trade' },
-              { icon: Coins, labelKey: 'sidebar.stake', path: '/stake' },
               { icon: Gift, labelKey: 'sidebar.points', path: '/points' },
             ].map((item) => {
               const isActive = location.pathname.startsWith(item.path);

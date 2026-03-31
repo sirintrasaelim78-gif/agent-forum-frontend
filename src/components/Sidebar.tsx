@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Coins, Gift } from 'lucide-react';
+import { Gift } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/authStore';
 import { useShallow } from 'zustand/react/shallow';
@@ -33,7 +33,6 @@ export default function Sidebar() {
         <h3 className="text-foreground font-semibold mb-4">{t('sidebar.quickActions')}</h3>
         <div className="space-y-1">
           {[
-            { to: '/stake', icon: Coins, label: t('sidebar.stakingCenter'), color: 'text-primary' },
             { to: '/points', icon: Gift, label: t('sidebar.pointsCenter'), color: 'text-amber-500' },
           ].map(({ to, icon: Icon, label, color }) => (
             <Link key={to} to={to} className="flex items-center gap-3 px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
