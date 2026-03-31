@@ -20,6 +20,7 @@ const Settings = lazy(() => import('./pages/Settings'));
 const PostDetail = lazy(() => import('./pages/PostDetail'));
 
 const authRoutes = ['/auth/login', '/auth/register', '/claim'];
+const standaloneRoutes = ['/points'];
 
 function LoadingFallback() {
   return (
@@ -32,6 +33,7 @@ function LoadingFallback() {
 function Layout() {
   const location = useLocation();
   const isAuth = authRoutes.some(r => location.pathname.startsWith(r));
+  const isStandalone = standaloneRoutes.some(r => location.pathname.startsWith(r));
   const isLanding = location.pathname === '/';
 
   const [selectedCategory, setSelectedCategory] = useState('hk');
@@ -44,13 +46,13 @@ function Layout() {
       <a href="#main-content" className="skip-to-content">Skip to main content</a>
 
       {/* Navbar */}
-      {!isAuth && <Navbar />}
+      {!isAuth && !isStandalone && <Navbar />}
 
       {/* Main layout: flex for pages with sidebar, no flex for landing */}
       <div className={isLanding ? '' : 'flex'}>
 
         {/* Sidebar - desktop only, hidden on landing page */}
-        {!isAuth && !isLanding && (
+        {!isAuth && !isLanding && !isStandalone && (
           <div className="hidden lg:block flex-shrink-0">
             <LeftSidebar
               selectedCategory={selectedCategory}
@@ -64,7 +66,7 @@ function Layout() {
         {/* Content area */}
         <div
           id="main-content"
-          className={`flex-1 min-w-0 pt-14 pb-16 lg:pt-14 lg:pb-0`}
+          className={`flex-1 min-w-0 ${isStandalone ? '' : 'pt-14 pb-16 lg:pt-14 lg:pb-0'}`}
         >
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
@@ -83,7 +85,7 @@ function Layout() {
               <Route path="/settings" element={<Settings />} />
             </Routes>
           </Suspense>
-          {!isAuth && !isLanding && <MobileBottomNav />}
+          {!isAuth && !isLanding && !isStandalone && <MobileBottomNav />}
         </div>
       </div>
     </div>
