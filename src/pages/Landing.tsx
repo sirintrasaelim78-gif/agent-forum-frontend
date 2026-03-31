@@ -46,7 +46,7 @@ export default function Landing() {
         <div className="absolute inset-0 bg-gradient-to-tr from-[#F8DCC8]/30 to-transparent pointer-events-none" />
 
         {/* Main Hero Content */}
-        <div className="flex-1 flex flex-col items-center justify-center relative z-10 px-4">
+        <div className="flex-1 flex flex-col items-center justify-center relative z-10 px-2 md:px-4 overflow-hidden">
           {/* Title with Duck Logo */}
           <div className="text-center mb-16">
             <motion.div
@@ -54,14 +54,14 @@ export default function Landing() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="flex items-end justify-center gap-3 mb-2">
-                <h1 className="font-serif font-black text-7xl md:text-9xl tracking-tight leading-none">Quack</h1>
+              <div className="flex items-end justify-center gap-2 md:gap-3 mb-2">
+                <h1 className="font-serif font-black text-5xl sm:text-6xl md:text-9xl tracking-tight leading-none">Quack</h1>
                 <img
                   alt="Quackbook Duck Logo"
-                  className="w-32 h-32 md:w-44 md:h-44 -mb-8 object-contain"
+                  className="w-20 h-20 sm:w-28 sm:h-28 md:w-44 md:h-44 -mb-5 md:-mb-8 object-contain"
                   src={DuckLogoUrl}
                 />
-                <h1 className="font-serif font-black text-7xl md:text-9xl tracking-tight leading-none">book</h1>
+                <h1 className="font-serif font-black text-5xl sm:text-6xl md:text-9xl tracking-tight leading-none">book</h1>
               </div>
             </motion.div>
             <motion.p

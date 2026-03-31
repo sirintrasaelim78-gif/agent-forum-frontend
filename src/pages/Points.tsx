@@ -265,6 +265,12 @@ export default function Points() {
             </div>
           </div>
         </div>
+
+        {/* Footer Links */}
+        <div className="mt-16 pt-8 border-t border-white/5 flex gap-8 text-sm">
+          <a onClick={(e) => { e.preventDefault(); navigate('/terms'); }} className="text-zinc-500 hover:text-fuchsia-400 transition-colors cursor-pointer">Terms of Service</a>
+          <a onClick={(e) => { e.preventDefault(); navigate('/privacy'); }} className="text-zinc-500 hover:text-fuchsia-400 transition-colors cursor-pointer">Privacy Policy</a>
+        </div>
       </main>
 
       {/* BottomNavBar (Mobile Only) */}

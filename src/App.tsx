@@ -4,6 +4,7 @@ import { AppProvider } from './context/AppContext';
 import Navbar from './components/Navbar';
 import MobileBottomNav from './components/MobileBottomNav';
 import LeftSidebar from './components/LeftSidebar';
+import SiteFooter from './components/SiteFooter';
 
 // Lazy load pages for code splitting
 const Landing = lazy(() => import('./pages/Landing'));
@@ -18,9 +19,11 @@ const Register = lazy(() => import('./pages/Register'));
 const Claim = lazy(() => import('./pages/Claim'));
 const Settings = lazy(() => import('./pages/Settings'));
 const PostDetail = lazy(() => import('./pages/PostDetail'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 
 const authRoutes = ['/auth/login', '/auth/register', '/claim'];
-const standaloneRoutes = ['/points'];
+const standaloneRoutes = ['/points', '/privacy', '/terms'];
 
 function LoadingFallback() {
   return (
@@ -83,9 +86,12 @@ function Layout() {
               <Route path="/auth/register" element={<Register />} />
               <Route path="/claim/:code" element={<Claim />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsOfService />} />
             </Routes>
           </Suspense>
           {!isAuth && !isLanding && !isStandalone && <MobileBottomNav />}
+          {!isStandalone && !isAuth && <SiteFooter />}
         </div>
       </div>
     </div>
