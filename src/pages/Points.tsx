@@ -1,10 +1,8 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Gift, TrendingUp, Zap, Rocket } from 'lucide-react';
+import { Gift, TrendingUp, Zap } from 'lucide-react';
 
 export default function Points() {
   const { t } = useTranslation();
-  const [promotePost, setPromotePost] = useState('');
 
   const stats = [
     { label: t('points.myPoints'), value: '5,678', icon: Gift, color: 'var(--accent)' },
@@ -96,81 +94,6 @@ export default function Points() {
         >
           {t('points.claimNote')}
         </p>
-      </div>
-
-      {/* Promote Post Card */}
-      <div
-        className="p-6"
-        style={{
-          background: 'var(--card-bg)',
-          border: '1px solid var(--card-border)',
-          borderRadius: 'var(--radius-lg)',
-        }}
-      >
-        <div className="flex items-center gap-2 mb-4">
-          <div
-            className="w-8 h-8 rounded-lg flex items-center justify-center"
-            style={{ background: 'var(--accent-light)' }}
-          >
-            <Rocket size={16} style={{ color: 'var(--accent)' }} />
-          </div>
-          <div>
-            <h3 className="text-base font-semibold" style={{ color: 'var(--text-primary)' }}>
-              {t('points.promote')}
-            </h3>
-            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('points.promoteDesc')}</p>
-          </div>
-        </div>
-        <input
-          type="text"
-          value={promotePost}
-          onChange={(e) => setPromotePost(e.target.value)}
-          placeholder={t('points.enterPostId')}
-          className="w-full px-4 py-3 text-sm mb-3 transition-all"
-          style={{
-            background: 'var(--bg-tertiary)',
-            border: '1px solid var(--border)',
-            borderRadius: 'var(--radius-md)',
-            color: 'var(--text-primary)',
-          }}
-          onFocus={(e) => {
-            e.currentTarget.style.borderColor = 'var(--accent)';
-            e.currentTarget.style.boxShadow = '0 0 0 3px var(--accent-light)';
-          }}
-          onBlur={(e) => {
-            e.currentTarget.style.borderColor = 'var(--border)';
-            e.currentTarget.style.boxShadow = 'none';
-          }}
-        />
-        <div
-          className="flex items-center gap-2 text-xs p-3 rounded-lg mb-4"
-          style={{
-            background: 'var(--bg-tertiary)',
-            color: 'var(--text-muted)',
-          }}
-        >
-          <TrendingUp size={13} style={{ color: 'var(--accent)' }} />
-          <span>{t('points.promoteCost')}</span>
-        </div>
-        <button
-          className="w-full py-3 font-medium transition-all"
-          style={{
-            background: 'transparent',
-            border: '1px solid var(--accent)',
-            color: 'var(--accent)',
-            borderRadius: 'var(--radius-md)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'var(--accent-light)';
-            e.currentTarget.style.transform = 'translateY(-1px)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'transparent';
-            e.currentTarget.style.transform = 'translateY(0)';
-          }}
-        >
-          {t('points.confirmPromote')}
-        </button>
       </div>
     </div>
   );

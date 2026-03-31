@@ -107,22 +107,6 @@ export default function PostCard({ post }: { post: PostWithPromoted }) {
               />
               ${post.coinSymbol}
             </Link>
-            {post.promoted && (
-              <span
-                className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-semibold tracking-wide"
-                style={{
-                  background: 'var(--success-muted)',
-                  color: 'var(--success)',
-                  borderRadius: 'var(--radius-sm)',
-                }}
-              >
-                <span
-                  className="w-0.5 h-0.5"
-                  style={{ background: 'var(--success)' }}
-                />
-                {t('home.pinnedPost')}
-              </span>
-            )}
           </div>
 
           {/* Content */}
