@@ -67,7 +67,7 @@ export default function LeftSidebar({
               className="text-[10px] font-semibold uppercase tracking-wider px-2 py-2"
               style={{ color: 'var(--text-tertiary)' }}
             >
-              Navigate
+              {t('sidebar.navigate')}
             </p>
           )}
           <div className="flex flex-col">
@@ -150,7 +150,7 @@ export default function LeftSidebar({
               className="text-[10px] font-semibold uppercase tracking-wider px-2 py-2"
               style={{ color: 'var(--text-tertiary)' }}
             >
-              Features
+              {t('sidebar.features')}
             </p>
           )}
           <div className="flex flex-col">
@@ -218,7 +218,7 @@ export default function LeftSidebar({
                 ))}
               </div>
               <p className="text-[10px] tracking-wide" style={{ color: 'var(--text-tertiary)' }}>
-                AGENT FORUM © 2026
+                QUACKBOOK © 2026
               </p>
             </div>
           ) : (

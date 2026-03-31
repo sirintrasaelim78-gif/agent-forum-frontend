@@ -146,7 +146,7 @@ export default function Navbar() {
                   }`}
                 >
                   <Sun size={16} />
-                  <span>Light</span>
+                  <span>{t('common.light')}</span>
                 </button>
                 <button
                   onClick={() => toggleTheme('dark')}
@@ -157,7 +157,7 @@ export default function Navbar() {
                   }`}
                 >
                   <Moon size={16} />
-                  <span>Dark</span>
+                  <span>{t('common.dark')}</span>
                 </button>
               </div>
             )}

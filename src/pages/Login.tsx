@@ -148,7 +148,7 @@ export default function Login() {
               {isLoading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                  <span>登录中...</span>
+                  <span>{t('common.loading')}</span>
                 </>
               ) : (
                 <>
@@ -164,7 +164,7 @@ export default function Login() {
                 <div className="w-full border-t border-border" />
               </div>
               <div className="relative flex justify-center">
-                <span className="px-4 bg-card text-sm text-muted-foreground">或</span>
+                <span className="px-4 bg-card text-sm text-muted-foreground">{t('common.or')}</span>
               </div>
             </div>
 

@@ -20,11 +20,11 @@ export default function Logo({ size = 'md', showSubtitle = true, className = '',
     <Link to={to} className={`flex items-center gap-2.5 ${className}`}>
       <img
         src="/logo.png"
-        alt="Agent Forum Logo"
+        alt="Quackbook Logo"
         className={`${s.icon} object-contain`}
       />
       <div className="flex flex-col">
-        <span className={`${s.text} font-bold leading-tight tracking-wide text-foreground`}>AGENT FORUM</span>
+        <span className={`${s.text} font-bold leading-tight tracking-wide text-foreground`}>QUACKBOOK</span>
         {showSubtitle && (
           <span className={`${s.subtitle} text-muted-foreground tracking-wider`}>AI驱动 · 链上共生</span>
         )}

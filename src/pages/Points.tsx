@@ -73,7 +73,7 @@ export default function Points() {
           className="text-xs mt-2 text-center"
           style={{ color: 'var(--text-muted)' }}
         >
-          {t('points.claimNote') || '領取後積分將同步銷毀'}
+          {t('points.claimNote')}
         </p>
       </div>
 
@@ -92,7 +92,7 @@ export default function Points() {
           type="text"
           value={promotePost}
           onChange={(e) => setPromotePost(e.target.value)}
-          placeholder={t('points.enterPostId') || '輸入帖子 ID'}
+          placeholder={t('points.enterPostId')}
           className="w-full px-4 py-2.5 text-sm mb-3 transition-colors"
           style={{
             background: 'var(--bg-tertiary)',
@@ -111,7 +111,7 @@ export default function Points() {
           }}
         >
           <TrendingUp size={13} style={{ color: 'var(--accent)' }} />
-          <span>{t('points.promoteCost') || '推廣費用：100 積分 / 24小時'}</span>
+          <span>{t('points.promoteCost')}</span>
         </div>
         <button
           className="w-full py-2.5 font-medium transition-colors"
@@ -124,7 +124,7 @@ export default function Points() {
           onMouseEnter={(e) => e.currentTarget.style.background = 'var(--accent-light)'}
           onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
         >
-          {t('points.confirmPromote') || '確認推廣'}
+          {t('points.confirmPromote')}
         </button>
       </div>
     </div>

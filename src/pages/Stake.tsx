@@ -37,7 +37,7 @@ export default function Stake() {
       </div>
 
       <div className="bg-card rounded-lg border border-border p-5 mb-5">
-        <label htmlFor="stakeAmount" className="text-sm text-muted-foreground mb-2 block">{t('stake.stake')} {t('stake.amount') || '數量'}</label>
+        <label htmlFor="stakeAmount" className="text-sm text-muted-foreground mb-2 block">{t('stake.stake')} {t('stake.amount')}</label>
         <input
           id="stakeAmount"
           type="number"
@@ -54,7 +54,7 @@ export default function Stake() {
               onClick={() => setSelectedPlan(i)}
               className={`p-3 rounded-xl border transition-colors ${selectedPlan === i ? 'border-primary bg-primary/5' : 'border-border bg-secondary hover:border-primary/30'}`}
             >
-              <p className="text-foreground font-medium">{plan.days} {t('stake.days') || '天'}</p>
+              <p className="text-foreground font-medium">{plan.days} {t('stake.days')}</p>
               <p className="text-primary text-sm font-semibold">{plan.apy}</p>
             </button>
           ))}
@@ -62,7 +62,7 @@ export default function Stake() {
 
         <div className="flex items-center gap-2 text-xs text-muted-foreground bg-secondary rounded-lg p-3 mt-4">
           <Coins size={13} className="text-primary" />
-          <span>{t('stake.stake')} {amount || '0'} AGENT，預計每日獎勵 {(Number(amount) * 0.001).toFixed(2)} {t('stake.reward')}</span>
+          <span>{t('stake.stake')} {amount || '0'} AGENT, {t('stake.reward')}: {(Number(amount) * 0.001).toFixed(2)}</span>
         </div>
 
         <button className="w-full py-3 mt-4 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-colors">
@@ -71,10 +71,10 @@ export default function Stake() {
       </div>
 
       <div className="bg-card rounded-lg border border-border p-5">
-        <h3 className="text-sm font-semibold text-foreground mb-3">{t('stake.history') || '質押記錄'}</h3>
+        <h3 className="text-sm font-semibold text-foreground mb-3">{t('stake.history')}</h3>
         {[
-          { amount: '500 AGENT', days: '30天', reward: '4.1 ' + t('stake.reward'), status: t('stake.completed') || '已完成' },
-          { amount: '1,000 AGENT', days: '90天', reward: '29.6 ' + t('stake.reward'), status: t('stake.staking') || '質押中' },
+          { amount: '500 AGENT', days: '30' + t('stake.days'), reward: '4.1', status: t('stake.completed') },
+          { amount: '1,000 AGENT', days: '90' + t('stake.days'), reward: '29.6', status: t('stake.staking') },
         ].map((r, i) => (
           <div key={i} className="flex items-start gap-2 py-3 text-sm border-b border-border/50 last:border-0">
             <Gift size={14} className="text-primary mt-0.5" />
@@ -82,7 +82,7 @@ export default function Stake() {
               <p className="text-foreground">{r.amount} - {r.days}</p>
               <p className="text-muted-foreground text-xs">{t('stake.reward')}: {r.reward}</p>
             </div>
-            <span className={`text-xs px-2 py-0.5 rounded ${r.status === (t('stake.completed') || '已完成') ? 'bg-green-500/10 text-green-500' : 'bg-yellow-500/10 text-yellow-600'}`}>{r.status}</span>
+            <span className={`text-xs px-2 py-0.5 rounded ${r.status === t('stake.completed') ? 'bg-green-500/10 text-green-500' : 'bg-yellow-500/10 text-yellow-600'}`}>{r.status}</span>
           </div>
         ))}
       </div>

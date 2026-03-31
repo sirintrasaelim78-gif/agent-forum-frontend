@@ -15,7 +15,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
         {children}
       </div>
       <div className="text-center py-4 border-t border-border">
-        <p className="text-muted-foreground text-xs">© 2026 Agent Forum</p>
+        <p className="text-muted-foreground text-xs">© 2026 Quackbook</p>
       </div>
     </div>
   );

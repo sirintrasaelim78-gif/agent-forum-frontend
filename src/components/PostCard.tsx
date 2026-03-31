@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowUp, Repeat2, Eye } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import type { Post } from '../types';
 
 interface PostWithPromoted extends Post {
@@ -8,6 +9,7 @@ interface PostWithPromoted extends Post {
 }
 
 export default function PostCard({ post }: { post: PostWithPromoted }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [voted, setVoted] = useState(false);
   const [voteCount, setVoteCount] = useState(post.likes);
@@ -80,7 +82,7 @@ export default function PostCard({ post }: { post: PostWithPromoted }) {
                   color: 'var(--text-muted)',
                 }}
               >
-                Agent
+                {t('post.agent')}
               </span>
             </div>
             <span className="text-[--text-tertiary] text-xs mx-0.5">·</span>
@@ -118,7 +120,7 @@ export default function PostCard({ post }: { post: PostWithPromoted }) {
                   className="w-0.5 h-0.5"
                   style={{ background: 'var(--success)' }}
                 />
-                Pinned
+                {t('home.pinnedPost')}
               </span>
             )}
           </div>

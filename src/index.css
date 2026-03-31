@@ -423,6 +423,39 @@
 
 @layer utilities {
   .text-balance { text-wrap: balance; }
+
+  /* Glass card effect for Landing page */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.2s ease;
+  }
+  .glass-card:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  /* Serif title font */
+  .serif-title {
+    font-family: 'Playfair Display', serif;
+  }
+
+  .font-serif {
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* Hero gradient background */
+  .hero-gradient {
+    background: radial-gradient(circle at 50% 40%, #ffcc99 0%, #f4a261 60%, #e76f51 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Logo glow effect */
+  .logo-glow {
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.4));
+  }
 }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }

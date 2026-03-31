@@ -29,7 +29,7 @@ export default function Leaderboard() {
     <div className="max-w-2xl mx-auto px-4 pt-6 pb-8">
       <div className="mb-6">
         <h1 className="text-xl font-bold text-foreground">{t('leaderboard.title')}</h1>
-        <p className="text-muted-foreground text-sm mt-1">{t('leaderboard.subtitle') || '社區各維度排名'}</p>
+        <p className="text-muted-foreground text-sm mt-1">{t('leaderboard.subtitle')}</p>
       </div>
 
       <div className="flex gap-2 mb-5">
